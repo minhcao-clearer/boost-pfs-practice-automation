@@ -1,0 +1,35 @@
+{
+  "name": "boost-pfs-demo-automation",
+  "version": "1.0.0",
+  "description": "Playwright + TypeScript E2E test framework for the Boost Commerce product filtering system",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:filter": "npx playwright test filter.spec.ts"
+  },
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20 <21"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^20.19.43",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-playwright": "^2.10.5",
+    "prettier": "^3.9.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.63.0"
+  }
+}
