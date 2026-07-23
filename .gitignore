@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Local environment (copy .env.example → .env and fill in BASE_URL)
+.env
+
+# Playwright output / artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.playwright-mcp/
+
+# OS / editor cruft
+.DS_Store

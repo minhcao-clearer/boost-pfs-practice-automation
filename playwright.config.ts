@@ -42,6 +42,17 @@ export default defineConfig({
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
+
+    /*
+     * The live Boost demo storefront throttles bursty automated traffic and
+     * answers with HTTP 429 / a "local_rate_limited" page. slowMo paces every
+     * Playwright action by 250ms so we no longer fire requests in a tight burst;
+     * combined with running serially (--workers=1) this keeps us under the limit.
+     * Override per-run with SLOWMO=<ms> (e.g. SLOWMO=0 for fast local reruns).
+     */
+    launchOptions: {
+      slowMo: Number(process.env.SLOWMO ?? 250),
+    },
   },
 
   /* Configure projects for major browsers */
