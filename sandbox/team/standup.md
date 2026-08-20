@@ -9,4 +9,5 @@
 - Binh: review PR
 
 ## Thu Tu
-- (chua cap nhat)
+- An: bao cao ket qua regression
+- Binh: deploy staging
