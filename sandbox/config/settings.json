@@ -1,6 +1,6 @@
 {
   "baseUrl": "https://boost-pfs-demo.myshopify.com",
-  "timeout": 30,
+  "timeout": 60,
   "retries": 1,
   "headless": true,
   "screenshotOnFailure": "always"
