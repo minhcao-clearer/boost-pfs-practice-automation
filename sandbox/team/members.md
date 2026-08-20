@@ -5,3 +5,4 @@
 | An | QA | an@example.com |
 | Binh | Dev | binh@example.com |
 | Chi | QA | chi@example.com |
+| Dung | QA | dung@example.com |
