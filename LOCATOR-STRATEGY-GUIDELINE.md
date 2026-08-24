@@ -208,7 +208,10 @@ Dù bạn chọn cách nào ở mục 2, locator đó phải:
 > chết trong timeout — hoàn toàn không nói gì về nguyên nhân. Chỉ 4 bước dưới đây là
 > tránh được.
 
-Mở trang thật trên trình duyệt, rồi tự trả lời:
+Mở trang thật trên trình duyệt, rồi tự trả lời. Cách nhanh nhất: nhờ Claude dùng
+**Playwright MCP** (repo đã bật sẵn — xem [`docs/ai-agents.md`](docs/ai-agents.md)) để mở
+trang và đọc DOM; hoặc tự mở DevTools và thử trong Console bằng
+`document.querySelectorAll('...')`.
 
 1. Nó có khớp **đúng một** element trong DOM không?
 2. Element đó có đúng là thứ người dùng thao tác không — hay chỉ là lớp phủ/wrapper vô hình?

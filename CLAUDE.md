@@ -119,7 +119,8 @@ additionally pins:
   invent a placeholder ID** for a test that has no ticket; a descriptive title alone is
   correct until the ticket exists.
 - **UI debugging uses a desktop viewport, 1920×1080** — so what you inspect matches what
-  the suite drives.
+  the suite drives. Already pinned in [`.mcp.json`](.mcp.json), so there is no resize step
+  to remember.
 
 ## Environment & commands
 

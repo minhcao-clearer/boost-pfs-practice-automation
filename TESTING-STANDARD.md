@@ -35,9 +35,11 @@ data values in it.
   not the clock.
 - **Escape hatch — all three, or it's a violation:** a fixed pause is allowed only when
   (1) there is genuinely **no observable signal**, (2) it is **minimal and bounded**, and
-  (3) it is left in via an explicit
-  `// eslint-disable-next-line playwright/no-wait-for-timeout -- <why no condition works>`
-  — so lint blocks every undocumented sleep and every real one is greppable and reviewed.
+  (3) it is left in via an explicit `eslint-disable-next-line` **naming the rule that
+  actually fires**, with a reason — `playwright/no-wait-for-timeout` for
+  `page.waitForTimeout(...)`, `no-restricted-syntax` for a hand-rolled
+  `new Promise(r => setTimeout(r, n))`. Lint then blocks every undocumented sleep, and
+  every real one is greppable and reviewed.
   Deliberate pacing / rate-limiting belongs in a **helper or backoff**, not a raw sleep in
   a spec.
 - **Always `await`** every action and assertion.

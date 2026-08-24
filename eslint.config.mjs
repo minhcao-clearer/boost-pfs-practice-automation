@@ -48,18 +48,31 @@ export default tseslint.config(
   },
 
   // A hand-rolled `await new Promise(r => setTimeout(r, n))` is the same fixed sleep in
-  // disguise, and no-wait-for-timeout does not see it. Ban setTimeout outright here.
+  // disguise, and no-wait-for-timeout does not see it. The selector targets that idiom
+  // specifically — setTimeout *inside* a `new Promise` — rather than every setTimeout, so
+  // browser-side code passed to page.evaluate() is not caught by mistake.
   {
     files: ["tests/**/*.ts", "lib/**/*.ts"],
     rules: {
       "no-restricted-syntax": [
         "error",
         {
-          selector: "CallExpression[callee.name='setTimeout']",
+          selector:
+            "NewExpression[callee.name='Promise'] CallExpression[callee.name='setTimeout']",
           message:
             "Fixed sleeps are flaky. Wait on a condition (locator, web-first assertion, waitForResponse) instead — see TESTING-STANDARD.md §3.",
         },
       ],
+    },
+  },
+
+  // Rule 5 of TESTING-STANDARD says every test ends with at least one assertion; the
+  // recommended config only warns about it, so pin it to an error the way we do for
+  // fixed sleeps.
+  {
+    files: ["tests/**/*.ts"],
+    rules: {
+      "playwright/expect-expect": "error",
     },
   },
 
