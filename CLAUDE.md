@@ -121,6 +121,9 @@ additionally pins:
   name has to state that the function checks something. A name outside the list — say
   `dashboardIsVisible()` — still works, but needs
   `// eslint-disable-next-line playwright/expect-expect -- <reason>`.
+  Note that a **wait is not an assertion**: use `waitForProductsLoaded()` as freely as you
+  like, but it syncs rather than verifies, so it does not stand in for the `expect` that
+  states what the test came to prove.
   **The enforced list is the `assertFunctionPatterns` regex in
   [`eslint.config.mjs`](eslint.config.mjs); keep these two in step.**
 - **Test IDs:** when a test corresponds to a Jira/Xray ticket, prefix its title with the
