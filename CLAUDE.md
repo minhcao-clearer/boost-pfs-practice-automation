@@ -113,7 +113,9 @@ additionally pins:
   stray `test.only`.
 - **Naming:** Page Object `PascalCase` + `Page` suffix (`FilterPage` in
   `filter.page.ts`); spec files `kebab-case.spec.ts`; locator fields `lowerCamelCase`
-  and `readonly`.
+  and `readonly`. A helper that asserts must be named **`verify…` / `assert…` /
+  `expect…`** — lint counts those as the test's assertion, and the name then says what
+  the function is for.
 - **Test IDs:** when a test corresponds to a Jira/Xray ticket, prefix its title with the
   real ID — `test("TC-1234: a filtered collection shows only matching products")`. **Never
   invent a placeholder ID** for a test that has no ticket; a descriptive title alone is

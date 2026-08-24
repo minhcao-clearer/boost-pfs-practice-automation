@@ -69,10 +69,17 @@ export default tseslint.config(
   // Rule 5 of TESTING-STANDARD says every test ends with at least one assertion; the
   // recommended config only warns about it, so pin it to an error the way we do for
   // fixed sleeps.
+  //
+  // The rule only looks at the test body, so an assertion moved into a helper would read
+  // as "no assertions". Calls to helpers named verify*/assert*/expect* count as
+  // assertions — which also makes the convention the name has to state what it does.
   {
     files: ["tests/**/*.ts"],
     rules: {
-      "playwright/expect-expect": "error",
+      "playwright/expect-expect": [
+        "error",
+        { assertFunctionPatterns: ["^(verify|assert|expect)"] },
+      ],
     },
   },
 
