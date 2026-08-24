@@ -39,7 +39,7 @@ and price _10–100_, the storefront must show **only** products with a Blue var
 in that range.
 
 This project proves that promise holds, automatically. The one reference test
-([`tests/regression/filter.spec.ts`](tests/regression/filter.spec.ts)):
+([`tests/filter/color-price.spec.ts`](tests/filter/color-price.spec.ts)):
 
 1. Opens a pre-filtered collection URL on the demo storefront.
 2. Reads every product the store returns.
@@ -97,7 +97,7 @@ boost-pfs-practice-automation/
 │   ├── pages/filter.page.ts      #   Page Object: the ONLY file with selectors
 │   └── types/product.types.ts    #   Shared TypeScript types
 ├── tests/
-│   └── regression/filter.spec.ts # The reference test (the "what")
+│   └── filter/color-price.spec.ts # Reference test — folders group by feature
 ├── docs/
 │   └── learn-playwright.md        # Beginner Playwright guide + test walkthrough
 ├── CLAUDE.md                      # Rules for adding/changing tests (read first)
@@ -140,8 +140,9 @@ the Page Object — so a Boost markup change touches one file, not every test.
 | `npm run format`      | Prettier — reformat (`format:check` to verify) |
 | `npm run check`       | **All gates at once** — run before pushing     |
 
-Useful raw flags: `npx playwright test filter.spec.ts:17` (one test),
-`-g "Filter validation"` (by title), `--repeat-each=5` (flake check).
+Useful raw flags: `npx playwright test tests/filter` (one feature),
+`--grep @smoke` (by tag), `-g "Filter validation"` (by title),
+`--repeat-each=5` (flake check).
 
 ---
 
@@ -152,9 +153,11 @@ Follow the pattern **data → navigate → wait → read → assert**, and obey
 
 1. New input (colour, price, route)? Add it to `lib/data/` — never a magic string
    in the spec.
-2. Create `*.spec.ts` under `tests/`. Import `{ test, expect }` from
-   `../../lib/fixtures` (not `@playwright/test` — you'd lose the `filterPage`
-   fixture).
+2. Create `*.spec.ts` under the folder for its **feature** (`tests/filter/`, add
+   `tests/search/` etc. as needed) — not by page, not by test type. Mark the type
+   with a **tag** instead: `{ tag: ["@smoke", "@regression"] }`. Import
+   `{ test, expect }` from `../../lib/fixtures` (not `@playwright/test` — you'd
+   lose the `filterPage` fixture).
 3. Navigate, then **wait for a condition** (`waitForProductsLoaded()`) — never a
    fixed sleep.
 4. Read via a Page Object method, then assert per item with a **descriptive
@@ -162,8 +165,9 @@ Follow the pattern **data → navigate → wait → read → assert**, and obey
 5. Need a new selector or action? Add a method to the **Page Object**, not the
    spec.
 
-Every happy-path test needs a **negative-path** counterpart (e.g. a filter that
-should return zero products). A full, annotated tutorial is in
+A happy-path test should usually have a **negative-path** counterpart (e.g. a filter
+that should return zero products) — a strong recommendation, not a hard rule. A full,
+annotated tutorial is in
 [`docs/learn-playwright.md`](docs/learn-playwright.md#4-viết-một-test-mới).
 
 ---

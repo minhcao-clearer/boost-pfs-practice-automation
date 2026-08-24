@@ -3,7 +3,7 @@
 Project-specific rules for this repository. Anyone (human or AI) adding or changing
 tests here MUST follow them. These exist to keep a **live-site E2E suite** stable and
 consistent — not to be creative. When in doubt, copy the pattern in
-`tests/regression/filter.spec.ts`.
+`tests/filter/color-price.spec.ts`.
 
 ## Base discipline — read this first
 
@@ -56,9 +56,11 @@ Follow **data → navigate → wait → read → assert**:
 
 1. New input (colour, price, route)? Add it to `lib/data/` — **never** a magic string
    in the spec.
-2. Create the spec as `*.spec.ts` under `tests/` (Playwright only discovers this
-   suffix). Import `{ test, expect }` from `../../lib/fixtures` — **never** from
-   `@playwright/test` directly (you would lose the `filterPage` fixture).
+2. Create the spec as `*.spec.ts` under the folder for its **feature**
+   (`tests/filter/`, add `tests/search/` etc. as needed), and mark its type with a
+   **tag** — `{ tag: ["@smoke", "@regression"] }`. Import `{ test, expect }` from
+   `../../lib/fixtures` — **never** from `@playwright/test` directly (you would lose
+   the `filterPage` fixture).
 3. Navigate to the target page/collection and drive it into the state your scenario
    needs, then wait for a condition (e.g. `await filterPage.waitForProductsLoaded()`) —
    never a fixed sleep.
@@ -96,11 +98,16 @@ additionally pins:
   fallback when no semantic locator exists.
 - **Self-documenting code, minimal comments.** Narrate a flow with `test.step()` blocks
   rather than inline comments; let names carry the intent.
-- **`.spec.ts` under `tests/` only.** **Folders group by type** (`regression/`, add
-  `smoke/` etc. as needed); **a file groups by page** — tests that drive the same Page
-  Object belong in the same spec as separate `test.describe` blocks, rather than a new
-  file per feature. `forbidOnly` is set for when CI runs; ESLint
-  `playwright/no-focused-test` also flags a stray `test.only`.
+- **`.spec.ts` under `tests/` only, and folders group by _functionality_** — the feature
+  under test (`tests/filter/`, later `tests/search/`, `tests/cart/`), **not** by page and
+  **not** by test type. A page is an implementation detail: when Boost moves filtering
+  from a sidebar into a modal, the feature is unchanged and the tests should not have to
+  move. A file holds one coherent slice of that feature (`color-price.spec.ts`).
+- **Test type is a _tag_, not a folder** — `test("…", { tag: ["@smoke", "@regression"] },
+…)`, selected with `npx playwright test --grep @smoke`. A test is often both; a folder
+  would force you to pick one and duplicate the file.
+- `forbidOnly` is set for when CI runs; ESLint `playwright/no-focused-test` also flags a
+  stray `test.only`.
 - **Naming:** Page Object `PascalCase` + `Page` suffix (`FilterPage` in
   `filter.page.ts`); spec files `kebab-case.spec.ts`; locator fields `lowerCamelCase`
   and `readonly`.

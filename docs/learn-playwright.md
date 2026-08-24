@@ -143,7 +143,7 @@ E2E ổn định trước một UI của bên thứ ba mà bạn không kiểm s
 
 ## 3. Đọc hiểu test hiện tại (từng dòng)
 
-File: [`tests/regression/filter.spec.ts`](../tests/regression/filter.spec.ts).
+File: [`tests/filter/color-price.spec.ts`](../tests/filter/color-price.spec.ts).
 
 ```ts
 import { test, expect } from "../../lib/fixtures"; // test + expect đã mở rộng của ta
@@ -159,55 +159,60 @@ const priceRangeOverlaps = (
   bandMax: number,
 ) => productMin <= bandMax && productMax >= bandMin;
 
-test("Filter validation: a colour + price filtered collection shows only matching products", async ({
-  page,
-  filterPage,
-}) => {
-  const minPrice = Number(FILTER_DATA.PRICE.MIN);
-  const maxPrice = Number(FILTER_DATA.PRICE.MAX);
+// `tag` phân loại test (smoke / regression) — thay cho việc chia thư mục theo loại.
+// Chạy riêng nhóm nào: npx playwright test --grep @smoke
+test(
+  "Filter validation: a colour + price filtered collection shows only matching products",
+  {
+    tag: ["@smoke", "@regression"],
+  },
+  async ({ page, filterPage }) => {
+    const minPrice = Number(FILTER_DATA.PRICE.MIN);
+    const maxPrice = Number(FILTER_DATA.PRICE.MAX);
 
-  // 1. Điều hướng tới URL đã mang sẵn bộ lọc màu + giá.
-  await page.goto(
-    buildFilteredCollectionUrl({
-      collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
-      color: FILTER_DATA.COLOR.BLUE,
-      minPrice: FILTER_DATA.PRICE.MIN,
-      maxPrice: FILTER_DATA.PRICE.MAX,
-    }),
-    { waitUntil: "domcontentloaded" },
-  );
-
-  // 2. Boost render lưới sản phẩm bất đồng bộ — chờ thẻ đầu tiên xuất hiện.
-  await filterPage.waitForProductsLoaded();
-
-  // 3. Bộ lọc phải trả về ít nhất một sản phẩm (web-first assertion, tự retry).
-  await expect(filterPage.filteredProducts).not.toHaveCount(0);
-
-  // 4. Đọc mọi thẻ sản phẩm thành dữ liệu có kiểu.
-  const productData = await filterPage.getProductData();
-
-  // 5. Mọi sản phẩm hiện ra phải khớp CẢ màu LẪN giá.
-  for (const { handle, colors, priceMin, priceMax } of productData) {
-    const matchesColor =
-      colors.some((color) => color.includes(FILTER_DATA.COLOR.BLUE)) ||
-      colors.includes("Multi Color");
-    expect(
-      matchesColor,
-      `Product "${handle}" offers no ${FILTER_DATA.COLOR.BLUE} colour (has: ${colors.join(", ")})`,
-    ).toBeTruthy();
-
-    const overlapsPriceBand = priceRangeOverlaps(
-      priceMin,
-      priceMax,
-      minPrice,
-      maxPrice,
+    // 1. Điều hướng tới URL đã mang sẵn bộ lọc màu + giá.
+    await page.goto(
+      buildFilteredCollectionUrl({
+        collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
+        color: FILTER_DATA.COLOR.BLUE,
+        minPrice: FILTER_DATA.PRICE.MIN,
+        maxPrice: FILTER_DATA.PRICE.MAX,
+      }),
+      { waitUntil: "domcontentloaded" },
     );
-    expect(
-      overlapsPriceBand,
-      `Product "${handle}" price range [${priceMin}, ${priceMax}] does not overlap [${minPrice}, ${maxPrice}]`,
-    ).toBeTruthy();
-  }
-});
+
+    // 2. Boost render lưới sản phẩm bất đồng bộ — chờ thẻ đầu tiên xuất hiện.
+    await filterPage.waitForProductsLoaded();
+
+    // 3. Bộ lọc phải trả về ít nhất một sản phẩm (web-first assertion, tự retry).
+    await expect(filterPage.filteredProducts).not.toHaveCount(0);
+
+    // 4. Đọc mọi thẻ sản phẩm thành dữ liệu có kiểu.
+    const productData = await filterPage.getProductData();
+
+    // 5. Mọi sản phẩm hiện ra phải khớp CẢ màu LẪN giá.
+    for (const { handle, colors, priceMin, priceMax } of productData) {
+      const matchesColor =
+        colors.some((color) => color.includes(FILTER_DATA.COLOR.BLUE)) ||
+        colors.includes("Multi Color");
+      expect(
+        matchesColor,
+        `Product "${handle}" offers no ${FILTER_DATA.COLOR.BLUE} colour (has: ${colors.join(", ")})`,
+      ).toBeTruthy();
+
+      const overlapsPriceBand = priceRangeOverlaps(
+        priceMin,
+        priceMax,
+        minPrice,
+        maxPrice,
+      );
+      expect(
+        overlapsPriceBand,
+        `Product "${handle}" price range [${priceMin}, ${priceMax}] does not overlap [${minPrice}, ${maxPrice}]`,
+      ).toBeTruthy();
+    }
+  },
+);
 ```
 
 **Hai chỗ tinh tế phải hiểu** (và **không được** siết chặt lại — sẽ gây false failure;
@@ -242,8 +247,9 @@ export const FILTER_DATA = {
 } as const;
 ```
 
-**Bước 2 — viết test.** Nếu tạo file mới (ví dụ
-`tests/regression/filter-black.spec.ts`), bắt đầu bằng đúng các import này — đây là file
+**Bước 2 — viết test.** File mới đặt trong thư mục của **chức năng** đang test (ví dụ
+`tests/filter/black.spec.ts` — thư mục chia theo _chức năng_, không theo page và không
+theo loại test; loại test dùng `tag`). Bắt đầu bằng đúng các import này — đây là file
 chạy được hoàn chỉnh:
 
 ```ts
@@ -251,29 +257,32 @@ import { test, expect } from "../../lib/fixtures";
 import { ROUTES, buildFilteredCollectionUrl } from "../../lib/data/urls";
 import { FILTER_DATA } from "../../lib/data/filter.data";
 
-test("Filter validation: Black-filtered collection shows only black products", async ({
-  page,
-  filterPage,
-}) => {
-  await page.goto(
-    buildFilteredCollectionUrl({
-      collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
-      color: FILTER_DATA.COLOR.BLACK,
-      minPrice: FILTER_DATA.PRICE.MIN,
-      maxPrice: FILTER_DATA.PRICE.MAX,
-    }),
-    { waitUntil: "domcontentloaded" },
-  );
-  await filterPage.waitForProductsLoaded();
+test(
+  "Filter validation: Black-filtered collection shows only black products",
+  {
+    tag: ["@regression"],
+  },
+  async ({ page, filterPage }) => {
+    await page.goto(
+      buildFilteredCollectionUrl({
+        collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
+        color: FILTER_DATA.COLOR.BLACK,
+        minPrice: FILTER_DATA.PRICE.MIN,
+        maxPrice: FILTER_DATA.PRICE.MAX,
+      }),
+      { waitUntil: "domcontentloaded" },
+    );
+    await filterPage.waitForProductsLoaded();
 
-  const products = await filterPage.getProductData();
-  for (const { handle, colors } of products) {
-    const matches =
-      colors.some((c) => c.includes(FILTER_DATA.COLOR.BLACK)) ||
-      colors.includes("Multi Color");
-    expect(matches, `Product "${handle}" is not black`).toBeTruthy();
-  }
-});
+    const products = await filterPage.getProductData();
+    for (const { handle, colors } of products) {
+      const matches =
+        colors.some((c) => c.includes(FILTER_DATA.COLOR.BLACK)) ||
+        colors.includes("Multi Color");
+      expect(matches, `Product "${handle}" is not black`).toBeTruthy();
+    }
+  },
+);
 ```
 
 **Bước 3 — cần selector/hành động mới?** Thêm method vào **Page Object**, không phải vào
