@@ -70,6 +70,11 @@ Chi tiết ở _Nhật ký quyết định_.
 
 - [ ] Với từng skill: sửa đường dẫn/kiến trúc cho khớp repo này (`lib/`, `tests/`) — xử lý R3
 - [ ] Bắt mỗi skill **đọc `TESTING-STANDARD.md` + `CLAUDE.md`** trước khi làm việc
+- [ ] **Đổi stack API, đừng bỏ năng lực API.** 3 file nhắc REST Assured/TestNG (Java):
+      `qa-automation-engineer/SKILL.md`, `references/TEST_STRATEGY.md`,
+      `references/PROMPT_TEMPLATES.md` #3 → thay bằng **`request` fixture /
+      `APIRequestContext` của Playwright** (cùng runner, cùng TS, cùng `expect`, không
+      thêm thư viện). Bản thân API testing đã được `TESTING-STANDARD` cho phép sẵn.
 - [ ] Thêm **từng cái một**, chạy `npm run check` sau mỗi cái
 - [ ] Dogfood thật 1 lần → giữ hoặc bỏ
 
