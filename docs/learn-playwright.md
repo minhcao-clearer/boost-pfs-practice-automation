@@ -13,7 +13,7 @@ test thật của dự án, để bạn hiểu _vì sao_ code được viết nh
 > | --------------------------- | ------------------------------------------------------------------- |
 > | Hiểu Playwright (file này)  | Tiếp tục đọc bên dưới                                               |
 > | Biết **luật** khi viết test | [`CLAUDE.md`](../CLAUDE.md)                                         |
-> | Chọn **locator** cho đúng   | [`locator-strategy-guideline.md`](../locator-strategy-guideline.md) |
+> | Chọn **locator** cho đúng   | [`LOCATOR-STRATEGY-GUIDELINE.md`](../LOCATOR-STRATEGY-GUIDELINE.md) |
 > | Cách **chạy** dự án         | [`README.md`](../README.md)                                         |
 
 ---
@@ -82,7 +82,7 @@ export class FilterPage {
 
 **Lợi ích:** nếu Boost đổi tên class CSS đó, ta sửa **một chỗ**, mọi test vẫn chạy.
 Cách _chọn_ selector nào để bỏ vào đây → xem
-[`locator-strategy-guideline.md`](../locator-strategy-guideline.md).
+[`LOCATOR-STRATEGY-GUIDELINE.md`](../LOCATOR-STRATEGY-GUIDELINE.md).
 
 ### 1.4 Fixtures (dependency injection)
 

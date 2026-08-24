@@ -14,7 +14,7 @@ shipped product.
 > | -------------------------------- | ----------------------------------------------------------------------- |
 > | Learn Playwright from scratch    | [`docs/learn-playwright.md`](docs/learn-playwright.md) (beginner guide) |
 > | Know the rules for writing tests | [`CLAUDE.md`](CLAUDE.md)                                                |
-> | Choose a locator                 | [`locator-strategy-guideline.md`](locator-strategy-guideline.md)        |
+> | Choose a locator                 | [`LOCATOR-STRATEGY-GUIDELINE.md`](LOCATOR-STRATEGY-GUIDELINE.md)        |
 
 ---
 
@@ -101,7 +101,7 @@ boost-pfs-practice-automation/
 ├── docs/
 │   └── learn-playwright.md        # Beginner Playwright guide + test walkthrough
 ├── CLAUDE.md                      # Rules for adding/changing tests (read first)
-├── locator-strategy-guideline.md  # How to choose a locator
+├── LOCATOR-STRATEGY-GUIDELINE.md  # How to choose a locator
 ├── playwright.config.ts           # Test runner config (timeouts, baseURL, …)
 ├── eslint.config.mjs              # Lint rules (flat config)
 ├── tsconfig.json                  # TypeScript (strict) options

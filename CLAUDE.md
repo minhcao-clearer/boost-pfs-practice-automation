@@ -5,6 +5,13 @@ tests here MUST follow them. These exist to keep a **live-site E2E suite** stabl
 consistent — not to be creative. When in doubt, copy the pattern in
 `tests/regression/filter.spec.ts`.
 
+## Base discipline — read this first
+
+This repo follows the portable, project-agnostic engine in
+[`TESTING-STANDARD.md`](TESTING-STANDARD.md) (how to write good E2E tests, in any
+project). **This file adds THIS project's specifics and overrides; where the two differ,
+this file wins.** The AI agents in `.claude/agents/` read both.
+
 ## What this project is
 
 Playwright + TypeScript **E2E test framework** for the Boost Commerce product-filtering
@@ -60,8 +67,9 @@ Follow **data → navigate → wait → read → assert**:
 5. Need a new selector or page action? Add a method to the Page Object — **not** the
    spec.
 
-Every happy-path test needs at least one **negative-path** test for each plausible
-failure mode (e.g. a filter expected to return zero products).
+A happy-path test **should usually** have a **negative-path** counterpart for a plausible
+failure mode (e.g. a filter expected to return zero products) — a strong recommendation,
+applied with judgment, not a hard requirement.
 
 ## Assertion logic — mirror Boost's semantics, don't tighten blindly
 
@@ -75,26 +83,22 @@ them produces false failures.
    `[priceMin, priceMax]` overlaps the band, because a product can have an in-band
    variant of another colour. Do **not** require the range to be fully contained.
 
-## Hard rules (violations are review failures, not style nits)
+## Hard rules — project reinforcements
 
-- **NEVER use `page.waitForTimeout()`** or any fixed sleep. Wait for a condition (a
-  locator visible, a web-first assertion).
-- **ALWAYS `await`** every Playwright action and assertion.
-- **Locator priority:** `getByRole` > `getByLabel`/`getByPlaceholder` > `getByText` >
-  `getByTestId` > CSS/XPath (last resort). Boost's stable `.boost-sd__*` classes are an
-  acceptable CSS fallback when no semantic locator exists.
-- **Use web-first, auto-retrying assertions** (`await expect(locator).…`) for anything
-  that depends on rendering (e.g. the `not.toHaveCount(0)` gate). Do not replace it with
-  a one-shot read.
-- **Every `test()` title and every `expect()` gets a descriptive message** naming the
-  behaviour and the offending value — this is the first line of debugging.
-- **Keep tests independent** — each navigates fresh; never rely on order or shared state.
+The universal hard rules — no fixed sleeps, always `await`, locator priority, web-first
+auto-retrying assertions, descriptive messages, independent tests, no `test.only` — live
+in [`TESTING-STANDARD.md`](TESTING-STANDARD.md) and apply here **in full**. This project
+additionally pins:
+
+- **Import `{ test, expect }` from `../../lib/fixtures`**, never from `@playwright/test`
+  — you would lose the `filterPage` fixture.
+- **Locator fallback:** Boost's stable `.boost-sd__*` classes are an acceptable CSS
+  fallback when no semantic locator exists.
 - **Self-documenting code, minimal comments.** Narrate a flow with `test.step()` blocks
   rather than inline comments; let names carry the intent.
-- **No `test.only` committed** (`forbidOnly` fails CI; ESLint `playwright/no-focused-test`
-  also flags it).
 - **`.spec.ts` under `tests/` only.** Group by type in subfolders (`regression/`, add
-  `smoke/` etc. as needed).
+  `smoke/` etc. as needed). `forbidOnly` is set for when CI runs; ESLint
+  `playwright/no-focused-test` also flags a stray `test.only`.
 
 ## Environment & commands
 
@@ -129,8 +133,8 @@ Apply Prettier + fix all ESLint findings. If you suppress an ESLint rule or use
 
 - ❌ CSS selector or `page.locator(...)` written inside a spec file.
 - ❌ Hardcoded colour/price/URL in a spec instead of `lib/data`.
-- ❌ `page.waitForTimeout(...)` / fixed sleeps.
+- ❌ `page.waitForTimeout(...)` / a fixed sleep to wait for state — except a bounded,
+  `eslint-disable`-justified pause when no condition exists.
 - ❌ Importing `test` from `@playwright/test` in a spec (must be `../../lib/fixtures`).
 - ❌ Assertions with no message.
-- ❌ A new happy-path test with no negative-path counterpart.
 - ❌ Bumping `retries` to mask a flaky test — fix the root cause instead.

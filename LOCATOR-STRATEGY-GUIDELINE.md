@@ -31,6 +31,8 @@ Playwright có nhiều cách để "chỉ" vào nút này — dùng role của n
 
 **Luật đơn giản: thử từ trên xuống, dùng cái đầu tiên khả thi.** Đừng nhảy thẳng xuống dưới vì "quen tay" — dòng càng ở trên càng ổn định và dễ đọc.
 
+> **Ngoại lệ linh hoạt (test-id):** thứ tự dưới đây là _mặc định_, không cứng nhắc. `data-testid` có thể **lên trên `getByText`** khi **chữ hiển thị hay đổi** — trang đa ngôn ngữ, nội dung động, hoặc text dài/không ổn định. Khi đó test-id là "hợp đồng" bền hơn text. Nguyên tắc gốc: **ổn định > vị trí trong danh sách này**.
+
 ### 1️⃣ `getByRole` — ưu tiên số 1
 
 Tìm theo "vai trò" của element (button, link, checkbox, heading...) — giống như cách người dùng khiếm thị dùng screen reader để nghe và biết đây là nút gì.
