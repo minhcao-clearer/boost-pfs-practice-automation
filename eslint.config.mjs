@@ -47,6 +47,22 @@ export default tseslint.config(
     },
   },
 
+  // A hand-rolled `await new Promise(r => setTimeout(r, n))` is the same fixed sleep in
+  // disguise, and no-wait-for-timeout does not see it. Ban setTimeout outright here.
+  {
+    files: ["tests/**/*.ts", "lib/**/*.ts"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "CallExpression[callee.name='setTimeout']",
+          message:
+            "Fixed sleeps are flaky. Wait on a condition (locator, web-first assertion, waitForResponse) instead — see TESTING-STANDARD.md §3.",
+        },
+      ],
+    },
+  },
+
   // Project rule tweaks.
   {
     rules: {

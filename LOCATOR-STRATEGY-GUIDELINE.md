@@ -184,7 +184,40 @@ page
 
 Nhìn vào bảng dễ thấy: XPath chỉ thắng ở khoản "đi theo parent/sibling" và "text matching mạnh" — còn lại thì Playwright locator (`getByRole`, `getByText`...) đều tốt hơn hoặc ngang bằng. Đây là lý do guideline luôn xếp XPath xuống cuối cùng trong thứ tự ưu tiên ở mục 2.
 
-## 5. Vài lỗi thường gặp khi mới chuyển từ Manual sang Automation
+## 5. Hai điều kiện một locator phải đạt
+
+Dù bạn chọn cách nào ở mục 2, locator đó phải:
+
+1. **Khớp đúng MỘT element** trong phạm vi đang xét — không mơ hồ. Nếu khớp nhiều, hãy
+   thu hẹp phạm vi (`filter()`, locator cha) thay vì thêm `nth()`.
+2. **Sống sót qua refactor giao diện** — dev thêm một `div` bọc ngoài, đổi layout flex,
+   đổi màu… locator vẫn phải đúng.
+
+**Tuyệt đối tránh:**
+
+- Class CSS sinh tự động / băm ngẫu nhiên: `css-1n2xyz`, `sc-AbCdEf`, `MuiBox-root-42` —
+  đổi mỗi lần build.
+- `id` do framework tự sinh (`:r3:`, `ember1042`).
+- `nth-child` / `nth-of-type` khi còn cách khác.
+- XPath tuyệt đối theo vị trí: `//div[3]/div[2]/form/button`.
+
+## 6. Quy trình kiểm chứng locator (làm TRƯỚC khi đưa vào code)
+
+> **Không bao giờ đoán locator.** Đây là bài học có thật của repo này: một selector sai
+> (`.boost-sd__product` thay vì `.boost-sd__product-item`) khớp **0 element** và làm test
+> chết trong timeout — hoàn toàn không nói gì về nguyên nhân. Chỉ 4 bước dưới đây là
+> tránh được.
+
+Mở trang thật trên trình duyệt, rồi tự trả lời:
+
+1. Nó có khớp **đúng một** element trong DOM không?
+2. Element đó có đúng là thứ người dùng thao tác không — hay chỉ là lớp phủ/wrapper vô hình?
+3. **Tải lại trang** rồi kiểm lại: vẫn đúng chứ?
+4. Ở các **trạng thái khác nhau** (đang tải, đã tải, có dữ liệu, rỗng) — có còn ổn định?
+
+Chỉ khi cả 4 đều "có" thì mới đưa locator vào Page Object.
+
+## 7. Vài lỗi thường gặp khi mới chuyển từ Manual sang Automation
 
 - **Tìm locator qua vị trí (index)** kiểu "phần tử thứ 3 trong danh sách" — rất dễ vỡ nếu danh sách đổi thứ tự. Ưu tiên tìm theo nội dung/role thay vì vị trí.
 - **Copy nguyên XPath từ DevTools** mà không rút gọn — thường ra absolute path rất dễ vỡ.

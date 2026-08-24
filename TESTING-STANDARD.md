@@ -29,7 +29,8 @@ data values in it.
 
 - **Never sleep to wait for state.** Use a **condition** — a locator, a web-first
   assertion, `waitForResponse` — never `waitForTimeout` / a fixed sleep. Playwright's own
-  docs call time-based waits _"inherently flaky"_.
+  docs call time-based waits _"inherently flaky"_. This covers **hand-rolled** sleeps too
+  (`await new Promise(r => setTimeout(r, n))`), which are the same thing in disguise.
 - **Debounce / throttle: wait on the _effect_** (the network call or the updated result),
   not the clock.
 - **Escape hatch — all three, or it's a violation:** a fixed pause is allowed only when
@@ -50,11 +51,18 @@ an explicit, stable contract. Order these **by situation, not dogma**: a test-id
 _above_ text when the text is dynamic or localized, and _below_ it when a human-visible
 label is the more meaningful, stable anchor. Fall back to stable CSS, and XPath only as a
 last resort; avoid index/position-based locators and DevTools-copied absolute paths.
+
+**Never guess a locator.** Read it off the **real DOM** and verify it there before
+committing it — do not infer one from a feature name, and do not copy one from older code
+without re-checking. A wrong locator does not announce itself: it matches nothing, and the
+test dies in a timeout far from the real cause.
 Follow the project's own locator guideline when it has one.
 
 ## 5. Clarity
 
 - Descriptive test titles.
+- **Every test ends with at least one assertion** — a test that only performs actions
+  proves nothing. Assert at meaningful intermediate steps too.
 - Every assertion carries a **message** naming the behaviour and the offending value —
   the first line of debugging.
 
@@ -67,7 +75,11 @@ Follow the project's own locator guideline when it has one.
   coupling.
 - **No leaked _mutable_ state.** One test's writes must not affect another. Against a
   shared backend, use **unique data per run** or **cleanup in teardown** — data
-  collisions are the top real-world independence killer. Deliberate, safe sharing is fine
+  collisions are the top real-world independence killer. Generate anything that must be
+  unique (emails, usernames, codes) rather than hardcoding it, and make it **traceable**
+  back to the test that created it, e.g.
+  `<prefix>_<testName>_<timestamp>_<random>` → `auto_createCustomer_20260402_A3F2`. Then
+  a stray record in the system names its own origin. Deliberate, safe sharing is fine
   and often better: reused auth (`storageState`), worker-scoped fixtures for expensive
   resources, read-only seed data. A genuine sequential journey may use
   `test.describe.serial` as a conscious, small **scoped island** (a failure cascades),
@@ -93,6 +105,10 @@ Before calling a change done, run the project's quality gates and the tests, and
 new/changed specs for flakiness (repeat runs). A failure gets a **root-cause fix** —
 never mask it with a sleep, a skip/`fixme`, or a loosened/deleted assertion. **A
 green-but-wrong test is worse than a red one.**
+
+Then clean up before handing the work over: no leftover debug logging, no commented-out
+code (keep comments that _explain_), no unused variables, locators, or imports. Debug
+scaffolding that ships is noise every future reader has to decode.
 
 ## 9. Reject these anti-patterns
 

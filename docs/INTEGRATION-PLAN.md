@@ -1,6 +1,6 @@
 # Kế hoạch tích hợp bộ `.claude` mới
 
-_Trạng thái: **chưa bắt đầu**. Tạo ngày 2026-08-02._
+_Trạng thái: **Bước 1–3 xong**, đang ở Bước 4. Cập nhật 2026-08-02._
 
 ## Mục tiêu
 
@@ -40,26 +40,26 @@ Mọi skill/agent phải **đọc 2 file đó**, không mang bản sao luật c�
 
 ---
 
-## Bước 2 — Chốt kiến trúc _(quyết định, chưa code)_
+## Bước 2 — Chốt kiến trúc ✅ **XONG**
 
-- [ ] **R1:** `rules/automation_rules.md` + `playwright_rules.md` → phần nào là _engine_
-      (trộn vào `TESTING-STANDARD.md`), phần nào là _content_ (vào `CLAUDE.md`)?
-      `locator_strategy.md` → trộn vào `LOCATOR-STRATEGY-GUIDELINE.md`.
-      **Kết quả mong muốn: vẫn chỉ 3 file luật, không thêm thư mục `rules/`.**
-- [ ] **R2:** với mỗi cặp trùng vai → giữ cái nào? Đổi tên? Gộp?
-- [ ] **R4:** Playwright MCP — bật không? `--headed` hay headless?
+- [x] **R1** — trộn vào 3 file luật hiện có, không tạo `.claude/rules/`
+- [x] **R2** — Q3/Q4: giữ cả hai, **hoãn** (xem _Nợ kỹ thuật_)
+- [x] **R4** — bật Playwright MCP, `--headed`
 
-**Xong khi:** mọi quyết định ghi vào mục _Nhật ký quyết định_ dưới đây.
+Chi tiết ở _Nhật ký quyết định_.
 
 ---
 
-## Bước 3 — Hợp nhất luật _(commit 1)_
+## Bước 3 — Hợp nhất luật ✅ **XONG**
 
-- [ ] Trộn nội dung `rules/*` vào 3 file luật hiện có theo quyết định Bước 2
-- [ ] **Không** tạo `.claude/rules/`
-- [ ] `npm run check` xanh
-
-**Xong khi:** không còn luật nào tồn tại ở 2 nơi.
+- [x] `TESTING-STANDARD.md`: §3 cấm cả sleep thủ công · §4 "không đoán locator, soi DOM
+      thật" · §5 mỗi test ≥1 assertion · §6 format data traceable · §8 dọn debug/code chết
+- [x] `LOCATOR-STRATEGY-GUIDELINE.md`: §5 hai điều kiện bắt buộc + danh sách cấm ·
+      §6 quy trình kiểm chứng 4 bước
+- [x] `CLAUDE.md`: naming · gom spec (thư mục=loại, file=page) · Test ID · viewport 1920×1080
+- [x] **ESLint:** chặn `setTimeout` ở `tests/` + `lib/` → bịt lỗ sleep thủ công (đã kiểm chứng)
+- [x] **Không** tạo `.claude/rules/` — vẫn đúng 3 file luật
+- [x] `npm run check` xanh
 
 ---
 
@@ -99,9 +99,22 @@ Mọi skill/agent phải **đọc 2 file đó**, không mang bản sao luật c�
 
 _(điền dần khi chốt từng điểm — để sau này biết **vì sao** làm vậy)_
 
-| Ngày | Vấn đề | Quyết định | Lý do |
-| ---- | ------ | ---------- | ----- |
-|      |        |            |       |
+| Ngày       | Vấn đề                                                               | Quyết định                                                                                                           | Lý do                                                                                                  |
+| ---------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 2026-08-02 | **Q1** Gom spec theo page hay theo loại?                             | **Kết hợp:** thư mục theo loại (`regression/`, `smoke/`), file gom test của cùng một Page Object                     | Giữ được cả hai ưu điểm; không phá cấu trúc đang có                                                    |
+| 2026-08-02 | **Q2** Bật Playwright MCP?                                           | **Bật, `--headed`**                                                                                                  | Học viên nhìn thấy AI soi DOM thật — giá trị dạy học cao                                               |
+| 2026-08-02 | **Q3/Q4** `review-and-refactor` + `qa-automation-engineer` trùng vai | **Giữ CẢ HAI, đánh dấu để xử lý sau**                                                                                | Chưa đủ dữ kiện để chốt; cần dùng thử rồi mới quyết. ⚠️ **Việc còn treo — xem "Nợ kỹ thuật" bên dưới** |
+| 2026-08-02 | **Q5** Quy ước Test ID `TC-XXXX`                                     | **Có** — nhưng dạng _"khi test có ticket Jira/Xray thì đặt ID vào đầu title"_, **không bắt buộc khi chưa có ticket** | Chuẩn bị sẵn cho Jira, nhưng không đẻ ID giả — chính luật nguồn cấm "invented placeholders"            |
+
+### ⚠️ Nợ kỹ thuật — phải quay lại xử lý
+
+**Q3/Q4 chưa giải quyết, chỉ hoãn.** Hiện `review-and-refactor` ↔ `test-reviewer` và
+`qa-automation-engineer` ↔ cả bộ agent **vẫn chồng vai**. Rủi ro: học viên không biết
+dùng cái nào (đúng R2). Cần chốt sau khi đã dùng thử thật:
+
+- [ ] Dùng thử cả hai trong 1–2 tuần
+- [ ] Chốt: mỗi vai trò chỉ còn **một** công cụ, hoặc phân định rõ ranh giới trong `ai-agents.md`
+- [ ] Nếu giữ cả hai: `ai-agents.md` **phải** nói rõ _khi nào dùng cái nào_
 
 ---
 

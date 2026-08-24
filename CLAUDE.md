@@ -96,9 +96,20 @@ additionally pins:
   fallback when no semantic locator exists.
 - **Self-documenting code, minimal comments.** Narrate a flow with `test.step()` blocks
   rather than inline comments; let names carry the intent.
-- **`.spec.ts` under `tests/` only.** Group by type in subfolders (`regression/`, add
-  `smoke/` etc. as needed). `forbidOnly` is set for when CI runs; ESLint
+- **`.spec.ts` under `tests/` only.** **Folders group by type** (`regression/`, add
+  `smoke/` etc. as needed); **a file groups by page** — tests that drive the same Page
+  Object belong in the same spec as separate `test.describe` blocks, rather than a new
+  file per feature. `forbidOnly` is set for when CI runs; ESLint
   `playwright/no-focused-test` also flags a stray `test.only`.
+- **Naming:** Page Object `PascalCase` + `Page` suffix (`FilterPage` in
+  `filter.page.ts`); spec files `kebab-case.spec.ts`; locator fields `lowerCamelCase`
+  and `readonly`.
+- **Test IDs:** when a test corresponds to a Jira/Xray ticket, prefix its title with the
+  real ID — `test("TC-1234: a filtered collection shows only matching products")`. **Never
+  invent a placeholder ID** for a test that has no ticket; a descriptive title alone is
+  correct until the ticket exists.
+- **UI debugging uses a desktop viewport, 1920×1080** — so what you inspect matches what
+  the suite drives.
 
 ## Environment & commands
 
