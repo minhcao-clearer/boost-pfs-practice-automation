@@ -106,15 +106,15 @@ _(điền dần khi chốt từng điểm — để sau này biết **vì sao** 
 | 2026-08-02 | **Q3/Q4** `review-and-refactor` + `qa-automation-engineer` trùng vai | **Giữ CẢ HAI, đánh dấu để xử lý sau**                                                                                | Chưa đủ dữ kiện để chốt; cần dùng thử rồi mới quyết. ⚠️ **Việc còn treo — xem "Nợ kỹ thuật" bên dưới** |
 | 2026-08-02 | **Q5** Quy ước Test ID `TC-XXXX`                                     | **Có** — nhưng dạng _"khi test có ticket Jira/Xray thì đặt ID vào đầu title"_, **không bắt buộc khi chưa có ticket** | Chuẩn bị sẵn cho Jira, nhưng không đẻ ID giả — chính luật nguồn cấm "invented placeholders"            |
 
-### ⚠️ Nợ kỹ thuật — phải quay lại xử lý
+### ⚠️ Nợ kỹ thuật
 
-**Q3/Q4 chưa giải quyết, chỉ hoãn.** Hiện `review-and-refactor` ↔ `test-reviewer` và
-`qa-automation-engineer` ↔ cả bộ agent **vẫn chồng vai**. Rủi ro: học viên không biết
-dùng cái nào (đúng R2). Cần chốt sau khi đã dùng thử thật:
+Hai thứ **cố ý gác lại** trong đợt tích hợp này — cả hai đã ghi vào
+[`ROADMAP.md` › Nợ kỹ thuật & quyết định hoãn](ROADMAP.md#-nợ-kỹ-thuật--quyết-định-hoãn),
+là **nơi lưu duy nhất** (file này chỉ là tài liệu tạm của đợt tích hợp, xong sẽ không ai
+đọc nữa):
 
-- [ ] Dùng thử cả hai trong 1–2 tuần
-- [ ] Chốt: mỗi vai trò chỉ còn **một** công cụ, hoặc phân định rõ ranh giới trong `ai-agents.md`
-- [ ] Nếu giữ cả hai: `ai-agents.md` **phải** nói rõ _khi nào dùng cái nào_
+- **N1** — có nên xây `BasePage` / `createLocatorGetter` không? _(xét lại khi ~5 Page Object)_
+- **N2** — `review-and-refactor` + `qa-automation-engineer` trùng vai, chưa phân định ranh giới
 
 ---
 

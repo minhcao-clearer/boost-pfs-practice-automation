@@ -121,6 +121,38 @@ hằng số, data và luật là biến số.
 
 ---
 
+## 🔖 Nợ kỹ thuật & quyết định hoãn
+
+_Những thứ **cố ý gác lại**, không phải bỏ sót. Đây là nơi lưu duy nhất — các tài liệu
+tạm (như [`INTEGRATION-PLAN.md`](INTEGRATION-PLAN.md)) chỉ trỏ về đây._
+
+### N1 — Có nên xây `BasePage` không? _(hoãn 2026-08-02)_
+
+Bộ `.claude` tích hợp vào có luật bắt locator viết dạng `(page: Page) => page.locator(...)`
+để dùng với `createLocatorGetter`. Ta **không mang sang**: đó là method `protected` của
+`BasePage` trong repo nguồn (`src/core/BasePage.ts`), mà repo này dùng class phẳng, không
+có `BasePage` nào.
+
+**Không phải vì pattern dở** — nó cho `this.page` dùng chung, helper `locator()`, và
+autocomplete type-safe trên locator map.
+
+- **Vì sao hoãn:** repo mới có **1 Page Object** → thêm abstraction lúc này là YAGNI, và
+  làm người mới khó đọc hơn.
+- **Khi nào xét lại:** khi lên ~5 Page Object và bắt đầu thấy lặp code giữa chúng.
+- **Nếu làm:** nhớ cập nhật `CLAUDE.md` (bảng layering) + `docs/learn-playwright.md`.
+- [ ] Xét lại khi đủ số Page Object
+
+### N2 — Skill trùng vai chưa phân định _(hoãn 2026-08-02)_
+
+`review-and-refactor` ↔ `test-reviewer`, và `qa-automation-engineer` ↔ cả bộ agent hiện
+có. Đã quyết **giữ cả hai** để dùng thử, nhưng **chưa phân định ranh giới** → học viên có
+thể không biết dùng cái nào.
+
+- [ ] Dùng thử 1–2 tuần
+- [ ] Chốt: mỗi vai trò một công cụ, **hoặc** ghi rõ trong `ai-agents.md` khi nào dùng cái nào
+
+---
+
 ## Quyết định & bài học đã chốt
 
 1. **Tự viết agent, không mượn generic.** Bộ agent Playwright MCP phổ biến tối ưu cho
