@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:filter": "playwright test filter.spec.ts"
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test"
   },
   "license": "UNLICENSED",
   "engines": {

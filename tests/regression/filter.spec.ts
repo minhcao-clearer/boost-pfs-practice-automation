@@ -26,12 +26,12 @@ test("Filter validation: a colour + price filtered collection shows only matchin
   // layout on the shared demo store switches between vertical/horizontal and
   // makes UI clicks flaky.
   await page.goto(
-    buildFilteredCollectionUrl(
-      ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
-      FILTER_DATA.COLOR.BLUE,
-      FILTER_DATA.PRICE.MIN,
-      FILTER_DATA.PRICE.MAX,
-    ),
+    buildFilteredCollectionUrl({
+      collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
+      color: FILTER_DATA.COLOR.BLUE,
+      minPrice: FILTER_DATA.PRICE.MIN,
+      maxPrice: FILTER_DATA.PRICE.MAX,
+    }),
     { waitUntil: "domcontentloaded" },
   );
   await filterPage.waitForProductsLoaded();

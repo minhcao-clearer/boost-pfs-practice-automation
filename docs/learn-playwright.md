@@ -168,12 +168,12 @@ test("Filter validation: a colour + price filtered collection shows only matchin
 
   // 1. Điều hướng tới URL đã mang sẵn bộ lọc màu + giá.
   await page.goto(
-    buildFilteredCollectionUrl(
-      ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
-      FILTER_DATA.COLOR.BLUE,
-      FILTER_DATA.PRICE.MIN,
-      FILTER_DATA.PRICE.MAX,
-    ),
+    buildFilteredCollectionUrl({
+      collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
+      color: FILTER_DATA.COLOR.BLUE,
+      minPrice: FILTER_DATA.PRICE.MIN,
+      maxPrice: FILTER_DATA.PRICE.MAX,
+    }),
     { waitUntil: "domcontentloaded" },
   );
 
@@ -256,12 +256,12 @@ test("Filter validation: Black-filtered collection shows only black products", a
   filterPage,
 }) => {
   await page.goto(
-    buildFilteredCollectionUrl(
-      ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
-      FILTER_DATA.COLOR.BLACK,
-      FILTER_DATA.PRICE.MIN,
-      FILTER_DATA.PRICE.MAX,
-    ),
+    buildFilteredCollectionUrl({
+      collectionPath: ROUTES.COLLECTION_ALL_VERTICAL_LAYOUT,
+      color: FILTER_DATA.COLOR.BLACK,
+      minPrice: FILTER_DATA.PRICE.MIN,
+      maxPrice: FILTER_DATA.PRICE.MAX,
+    }),
     { waitUntil: "domcontentloaded" },
   );
   await filterPage.waitForProductsLoaded();
@@ -292,11 +292,12 @@ async getProductTitles(): Promise<string[]> {
 cần **một test negative-path** cho mỗi kiểu lỗi hợp lý (ví dụ một bộ lọc _phải_ trả về 0
 sản phẩm). Đây là điều người mới hay bỏ sót nhất.
 
-**Bước 5 — chạy** bằng `npm run test:ui` khi phát triển (phản hồi nhanh), rồi `npm test`
-trước khi push, và cuối cùng là ba cổng chất lượng:
+**Bước 5 — chạy** bằng `npm run test:ui` khi phát triển (phản hồi nhanh). Trước khi
+push, chạy **một lệnh duy nhất** gói trọn mọi cổng chất lượng (typecheck + lint +
+format + test):
 
 ```bash
-npm run typecheck && npm run lint && npm run format:check && npm test
+npm run check
 ```
 
 **Vài luật vàng khi thêm test** (bản đầy đủ trong [`CLAUDE.md`](../CLAUDE.md)):

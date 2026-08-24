@@ -118,11 +118,14 @@ additionally pins:
 
 ## Before you call a change done
 
-Run the same gates CI runs, and they MUST pass:
+Run every gate, and they MUST pass:
 
 ```bash
-npm run typecheck && npm run lint && npm run format:check && npm test
+npm run check
 ```
+
+(That is `typecheck` + `lint` + `format:check` + `test`. CI runs the first three;
+the E2E suite runs only here, so **this local run is the real safety net**.)
 
 Stress new/changed specs for flakiness: `npx playwright test <file> --repeat-each=5`.
 Apply Prettier + fix all ESLint findings. If you suppress an ESLint rule or use

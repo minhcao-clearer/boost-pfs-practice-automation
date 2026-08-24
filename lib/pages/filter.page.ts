@@ -1,12 +1,13 @@
 import { type Locator, type Page } from "@playwright/test";
 import { type ProductData } from "../types/product.types";
 
+/** Boost renders the grid asynchronously; allow for a slow live store. */
+const PRODUCT_GRID_TIMEOUT_MS = 20_000;
+
 export class FilterPage {
-  readonly page: Page;
   readonly filteredProducts: Locator;
 
   constructor(page: Page) {
-    this.page = page;
     this.filteredProducts = page.locator(".boost-sd__product-item");
   }
 
@@ -17,7 +18,7 @@ export class FilterPage {
   async waitForProductsLoaded() {
     await this.filteredProducts
       .first()
-      .waitFor({ state: "visible", timeout: 20000 });
+      .waitFor({ state: "visible", timeout: PRODUCT_GRID_TIMEOUT_MS });
   }
 
   /**
@@ -28,7 +29,16 @@ export class FilterPage {
   async getProductData(): Promise<ProductData[]> {
     return this.filteredProducts.evaluateAll((items) =>
       items.map((item) => {
-        const data = JSON.parse(item.getAttribute("data-product") || "{}");
+        const raw = item.getAttribute("data-product");
+        if (!raw) {
+          // Fail loudly: defaulting to {} would yield handle: undefined and
+          // priceMin: NaN, so a renamed attribute would surface as a confusing
+          // assertion failure instead of the real cause.
+          throw new Error(
+            "Product card has no `data-product` attribute — Boost's markup has likely changed.",
+          );
+        }
+        const data = JSON.parse(raw);
         const colorOption = (data.options_with_values || []).find(
           (option: { name?: string }) =>
             (option.name || "").toLowerCase() === "color",

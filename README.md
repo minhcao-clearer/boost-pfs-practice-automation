@@ -137,6 +137,7 @@ the Page Object — so a Boost markup change touches one file, not every test.
 | `npm run typecheck`   | `tsc --noEmit` — type errors                   |
 | `npm run lint`        | ESLint — code issues (`lint:fix` to auto-fix)  |
 | `npm run format`      | Prettier — reformat (`format:check` to verify) |
+| `npm run check`       | **All gates at once** — run before pushing     |
 
 Useful raw flags: `npx playwright test filter.spec.ts:17` (one test),
 `-g "Filter validation"` (by title), `--repeat-each=5` (flake check).
@@ -168,10 +169,11 @@ should return zero products). A full, annotated tutorial is in
 
 ## 6. Quality gates
 
-Run these before every push — they are the same checks a reviewer expects:
+One command runs everything a reviewer expects — type-check, lint, formatting and
+the E2E suite. **Run it before every push:**
 
 ```bash
-npm run typecheck && npm run lint && npm run format:check && npm test
+npm run check
 ```
 
 Stress a new/changed spec for flakiness with
