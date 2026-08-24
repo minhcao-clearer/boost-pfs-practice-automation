@@ -67,6 +67,9 @@ Follow the project's own locator guideline when it has one.
   proves nothing. Assert at meaningful intermediate steps too. If you extract assertions
   into a helper, **name it for what it does** (`verifyX`, `assertX`, `checkX`): the
   reader can then tell a check from an action at the call site, and lint can tell too.
+- **A wait is not an assertion.** A synchronisation helper throws when the thing never
+  appears, which can feel like proof — but it establishes the state the test needs, it
+  does not state what the test came to prove. Use waits freely; still assert.
 - Every assertion carries a **message** naming the behaviour and the offending value —
   the first line of debugging.
 
