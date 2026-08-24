@@ -26,6 +26,10 @@ export default tseslint.config(
   // Fixed sleeps are flaky: enforce as an error (recommended ships it only as a warning).
   // A rare, unavoidable pause must be left in with an explicit disable + reason, e.g.:
   //   // eslint-disable-next-line playwright/no-wait-for-timeout -- <why no condition works>
+  //
+  // These two blocks must stay SEPARATE. tests/ already has the playwright plugin from
+  // the recommended config above, so re-registering it there fails with
+  // "Cannot redefine plugin". lib/ has no plugin yet, so it must register its own.
   {
     files: ["tests/**/*.ts"],
     rules: {
@@ -34,7 +38,7 @@ export default tseslint.config(
   },
 
   // Same enforcement for Page Objects / helpers under lib/, so a fixed sleep can't hide
-  // there (the Playwright plugin above is scoped to tests/ only).
+  // there (the Playwright config above is scoped to tests/ only).
   {
     files: ["lib/**/*.ts"],
     plugins: { playwright },

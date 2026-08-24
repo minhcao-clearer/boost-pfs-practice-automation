@@ -2,16 +2,15 @@ import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 
-// Load env from .env (gitignored). In CI these come from the workflow instead.
-// `quiet` suppresses dotenv's promotional tips so test output stays clean.
+// Load env from .env (gitignored). `quiet` suppresses dotenv's promotional tips
+// so test output stays clean.
 dotenv.config({ path: path.resolve(__dirname, ".env"), quiet: true });
 
 // Fail fast with a clear message instead of a cryptic "invalid URL" later.
 const baseURL = process.env.BASE_URL;
 if (!baseURL) {
   throw new Error(
-    "BASE_URL is not set. Copy .env.example to .env for local runs, " +
-      "or set it as an env var / repo variable in CI.",
+    "BASE_URL is not set. Copy .env.example to .env, or pass it as an env var.",
   );
 }
 
@@ -39,54 +38,21 @@ export default defineConfig({
     /* Base URL for relative navigations like `page.goto('/collections/...')`. */
     baseURL,
 
-    /* Keep artifacts only when they're useful (on failure/retry) to stay fast. */
-    trace: "on-first-retry",
+    /* Keep artifacts only when they're useful — on failure — to stay fast.
+       Trace must be retain-on-failure, NOT on-first-retry: with retries at 0 a
+       retry never happens, so on-first-retry would never capture anything. */
+    trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
 
-  /* Configure projects for major browsers */
+  /* Chromium only for now. Add more browsers/viewports here when a scenario
+     needs them, e.g. { name: "firefox", use: devices["Desktop Firefox"] } or
+     { name: "Mobile Chrome", use: devices["Pixel 5"] }. */
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
