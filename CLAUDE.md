@@ -103,6 +103,9 @@ additionally pins:
   **not** by test type. A page is an implementation detail: when Boost moves filtering
   from a sidebar into a modal, the feature is unchanged and the tests should not have to
   move. A file holds one coherent slice of that feature (`color-price.spec.ts`).
+  **The feature name is a human input, never an AI guess** — check which folders already
+  exist and reuse one; only coin a new name deliberately. Guessing is how one feature
+  ends up spelled four ways.
 - **Test type is a _tag_, not a folder** — `test("…", { tag: ["@smoke", "@regression"] },
 …)`, selected with `npx playwright test --grep @smoke`. A test is often both; a folder
   would force you to pick one and duplicate the file.

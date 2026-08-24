@@ -17,6 +17,23 @@ dropped into.
 - Read an existing test and its Page Objects / data files, and copy the established
   conventions.
 
+## Step 1 — get the feature from the human, never invent it
+
+Which feature a test belongs to is a **domain decision**, not something to infer from a
+page. Left to guesswork, the same feature ends up as `filter`, `filtering`,
+`product-filter` and `catalog` across different runs, and the suite fragments.
+
+So, before writing anything:
+
+1. **List the feature folders that already exist** under the project's test root.
+2. **Ask which one this scenario belongs to** — or, if genuinely new, ask the human to
+   name it. Offer the existing names first so an existing feature is reused rather than
+   re-coined under a synonym.
+3. Ask for the **tags** (e.g. `@smoke`, `@regression`) and, if the project uses ticket
+   IDs, the **real ticket ID** — never invent a placeholder.
+
+Only proceed once the target folder is settled.
+
 ## Your job
 
 Author the requested scenario as a test — and **add a negative / edge counterpart where

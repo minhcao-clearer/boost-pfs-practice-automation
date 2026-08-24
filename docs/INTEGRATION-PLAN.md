@@ -75,6 +75,12 @@ Chi tiết ở _Nhật ký quyết định_.
       `references/PROMPT_TEMPLATES.md` #3 → thay bằng **`request` fixture /
       `APIRequestContext` của Playwright** (cùng runner, cùng TS, cùng `expect`, không
       thêm thư viện). Bản thân API testing đã được `TESTING-STANDARD` cho phép sẵn.
+- [ ] **Thêm "feature" vào bảng _Inputs to collect_** của
+      `generate-automation-from-testcases` (bảng đó đã thu test-case file, app URL,
+      credentials, tech stack — thêm dòng này). Chức năng là **input của con người**, không
+      để AI đoán: quy trình phải **liệt kê thư mục chức năng đang có** rồi mới hỏi chọn/đặt
+      mới. Nếu đoán, cùng một chức năng sẽ mọc ra `filter` / `filtering` / `product-filter`
+      ở mỗi lần chạy. (Đã áp cho `test-author` + `/new-test`.)
 - [ ] Thêm **từng cái một**, chạy `npm run check` sau mỗi cái
 - [ ] Dogfood thật 1 lần → giữ hoặc bỏ
 
