@@ -19,18 +19,19 @@ if (!baseURL) {
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  // 60s per test: E2E hits a live site; CI runners are slower than local.
+  // 60s per test: the suite drives a live site, which can be slow to respond.
   timeout: 60_000,
   globalTimeout: 10 * 60 * 1000,
   testDir: "./tests",
-  /* Run tests in files in parallel */
+  /* Run tests in files in parallel — parallelism is what surfaces hidden coupling
+     between tests (see TESTING-STANDARD.md §6). */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  /* Belt-and-braces against a stray test.only; ESLint's playwright/no-focused-test
+     catches it in CI, which is where the lint gate runs. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  /* No retries: a flaky test should be fixed at the root, not retried until green
+     (see CLAUDE.md's anti-patterns). The suite runs locally, so failures are seen. */
+  retries: 0,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"], ["list"]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

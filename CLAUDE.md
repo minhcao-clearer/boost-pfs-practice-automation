@@ -103,8 +103,8 @@ additionally pins:
 ## Environment & commands
 
 - `BASE_URL` is required. Local: `cp .env.example .env` (already has a valid URL, no edit
-  needed). CI: set directly in the workflow's `env:` (the demo store is public and fixed,
-  so it is config, not a secret). The config **throws fast** if it is missing.
+  needed). The config **throws fast** if it is missing. CI does not need it — the E2E
+  suite runs locally only (CI is the quality gate: typecheck/lint/format).
 - Use **Node 20** (`nvm use`). Newer Node runs but warns (`EBADENGINE`).
 - Setup once: `npm install` then `npx playwright install`.
 

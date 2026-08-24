@@ -88,7 +88,7 @@ fixes are in [Troubleshooting](#7-troubleshooting).
 
 ```
 boost-pfs-practice-automation/
-├── .github/workflows/playwright.yml # CI: quality + E2E jobs (GitHub Actions)
+├── .github/workflows/ci.yml # CI: quality gate (typecheck/lint/format)
 ├── lib/                          # Reusable test infrastructure (the "how")
 │   ├── data/                     #   Constant inputs + URL builders (no logic)
 │   │   ├── filter.data.ts        #     Filter inputs (colour, price)
@@ -179,17 +179,15 @@ Stress a new/changed spec for flakiness with
 
 ### Continuous Integration
 
-[`.github/workflows/playwright.yml`](.github/workflows/playwright.yml) runs on every
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every
 push to `main`/`master` or a `pw-practice-**` branch (and on PRs to `main`/`master`), as
-two jobs:
+one **quality** job: `typecheck` + `lint` + `format:check`. It is fast, deterministic,
+and needs no setup or secrets.
 
-- **quality** — `typecheck` + `lint` + `format:check` (fast, deterministic).
-- **test** — installs browsers, runs the E2E suite, and uploads the HTML report as
-  an artifact (kept 30 days).
-
-**No setup needed.** `.env` is gitignored, so the workflow supplies `BASE_URL` itself —
-the demo storefront is public and fixed, so it is plain config, not a secret. To target a
-different store, edit that `env:` line in the workflow.
+**The E2E suite deliberately does not run in CI.** It drives a shared, live third-party
+storefront, so running it on every push would be slow and put needless load on that
+store. **Running `npm test` locally before you push is the safety net** — see the gate
+command above.
 
 ---
 

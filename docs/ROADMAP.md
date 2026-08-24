@@ -48,10 +48,12 @@ fork kế thừa cái gãy._
 - [x] README: 905 → ~215 dòng, áp _single source of truth_
 - [x] Thêm [`learn-playwright.md`](learn-playwright.md) — tài liệu học tiếng Việt
 - [x] 7 file config: `.env.example`, `.nvmrc`, `.prettierrc.json`, `.editorconfig`, `.gitignore`, `.gitattributes`, `.prettierignore`
-- [x] Dựng CI `.github/workflows/playwright.yml` (2 job: `quality` + `test`)
+- [x] Dựng CI `.github/workflows/ci.yml`
 - [x] Scan & vá: untrack file generated, CI chạy cho branch `pw-practice-**`, đổi tên package, fix anchor
-- [x] Bỏ secret `BASE_URL` (URL công khai, cố định → plain config, **zero setup**)
-- [x] **CI xanh trên GitHub** (2 run, cả 2 job)
+- [x] Bỏ secret `BASE_URL` (URL công khai, cố định → **zero setup**)
+- [x] **CI xanh trên GitHub**
+- [x] **Thu hẹp CI về đúng quality gate** (typecheck/lint/format) — E2E đánh vào store
+      bên thứ ba dùng chung nên **chạy local trước khi push**, không chạy mỗi push
 
 **Commit:** `5f84706`, `932cd70`, `318c79e` · đã merge + push vào `main`
 
@@ -81,7 +83,8 @@ _Tooling để AI hỗ trợ đúng cách, và để rèn kỹ năng phán đoá
 
 _CI thay lead đi tuần tra 12 branch, thay vì soi tay từng PR._
 
-- [x] CI cơ bản (quality + test) — _làm sớm ở Phase 0_
+- [x] CI quality gate (typecheck/lint/format) — _làm sớm ở Phase 0_
+- [ ] Quyết định khi nào/cách nào đưa E2E vào CI (theo lịch? chỉ PR? tách smoke vs regression?)
 - [ ] Guard tự động: chặn `.js` spec (repo TS-only)
 - [ ] Guard: chặn commit `.env`
 - [ ] Guard: chặn `page.locator(...)` viết trong `tests/`

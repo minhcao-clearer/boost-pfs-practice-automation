@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches: [main, master, "pw-practice-**"]
+  pull_request:
+    branches: [main, master]
+jobs:
+  # Fast, deterministic gate: type-check, lint and formatting.
+  quality:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Format check
+        run: npm run format:check
+# The E2E suite deliberately does NOT run here. It drives a shared, live
+# third-party storefront, so running it on every push would be slow and put
+# needless load on that store. Run it locally with `npm test` before pushing.
