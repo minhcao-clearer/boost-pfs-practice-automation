@@ -1,4 +1,3 @@
-//import { test, expect } from "@playwright/test";
 import { test, expect } from "../../lib/fixtures";
 import { ROUTES, buildFilteredCollectionUrl } from "../../lib/data/urls";
 import { FILTER_DATA } from "../../lib/data/filter.data";
@@ -38,7 +37,10 @@ test("Filter validation: a colour + price filtered collection shows only matchin
   await filterPage.waitForProductsLoaded();
 
   // The filter must return at least one product.
-  await expect(filterPage.filteredProducts).not.toHaveCount(0);
+  await expect(
+    filterPage.filteredProducts,
+    `No products returned for ${FILTER_DATA.COLOR.BLUE} in price band [${minPrice}, ${maxPrice}]`,
+  ).not.toHaveCount(0);
 
   const productData = await filterPage.getProductData();
 
