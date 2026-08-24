@@ -113,9 +113,16 @@ additionally pins:
   stray `test.only`.
 - **Naming:** Page Object `PascalCase` + `Page` suffix (`FilterPage` in
   `filter.page.ts`); spec files `kebab-case.spec.ts`; locator fields `lowerCamelCase`
-  and `readonly`. A helper that asserts must be named **`verify…` / `assert…` /
-  `expect…`** — lint counts those as the test's assertion, and the name then says what
-  the function is for.
+  and `readonly`.
+- **A helper that asserts must start with a checking verb** — `verify…`, `assert…`,
+  `expect…`, `ensure…`, `validate…`, `confirm…`, `should…`, or `checkSomething` (the
+  next letter must be uppercase, so an action like `checkout()` is not mistaken for an
+  assertion). Lint counts a call to one as the test's own assertion, which is why the
+  name has to state that the function checks something. A name outside the list — say
+  `dashboardIsVisible()` — still works, but needs
+  `// eslint-disable-next-line playwright/expect-expect -- <reason>`.
+  **The enforced list is the `assertFunctionPatterns` regex in
+  [`eslint.config.mjs`](eslint.config.mjs); keep these two in step.**
 - **Test IDs:** when a test corresponds to a Jira/Xray ticket, prefix its title with the
   real ID — `test("TC-1234: a filtered collection shows only matching products")`. **Never
   invent a placeholder ID** for a test that has no ticket; a descriptive title alone is

@@ -64,7 +64,9 @@ Follow the project's own locator guideline when it has one.
 
 - Descriptive test titles.
 - **Every test ends with at least one assertion** — a test that only performs actions
-  proves nothing. Assert at meaningful intermediate steps too.
+  proves nothing. Assert at meaningful intermediate steps too. If you extract assertions
+  into a helper, **name it for what it does** (`verifyX`, `assertX`, `checkX`): the
+  reader can then tell a check from an action at the call site, and lint can tell too.
 - Every assertion carries a **message** naming the behaviour and the offending value —
   the first line of debugging.
 

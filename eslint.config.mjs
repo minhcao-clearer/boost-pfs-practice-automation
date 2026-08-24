@@ -71,14 +71,26 @@ export default tseslint.config(
   // fixed sleeps.
   //
   // The rule only looks at the test body, so an assertion moved into a helper would read
-  // as "no assertions". Calls to helpers named verify*/assert*/expect* count as
-  // assertions — which also makes the convention the name has to state what it does.
+  // as "no assertions". A call to a helper whose name STARTS WITH a checking verb counts
+  // as the assertion — so the convention is simply: if it checks something, say so in the
+  // name. Anything outside this list needs an eslint-disable with a reason.
+  //
+  // `check` is matched separately, requiring an uppercase letter after it, so that
+  // checkout() — an action, not an assertion — is not silently treated as one.
+  //
+  // This list is also written out in CLAUDE.md ("A helper that asserts must start with a
+  // checking verb"). Change one, change the other.
   {
     files: ["tests/**/*.ts"],
     rules: {
       "playwright/expect-expect": [
         "error",
-        { assertFunctionPatterns: ["^(verify|assert|expect)"] },
+        {
+          assertFunctionPatterns: [
+            "^(verify|assert|expect|ensure|validate|confirm|should)",
+            "^check([A-Z]|$)",
+          ],
+        },
       ],
     },
   },
