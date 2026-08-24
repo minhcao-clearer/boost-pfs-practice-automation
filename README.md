@@ -180,15 +180,16 @@ Stress a new/changed spec for flakiness with
 ### Continuous Integration
 
 [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml) runs on every
-push and PR to `main`/`master`, as two jobs:
+push to `main`/`master` or a `pw-practice-**` branch (and on PRs to `main`/`master`), as
+two jobs:
 
 - **quality** — `typecheck` + `lint` + `format:check` (fast, deterministic).
 - **test** — installs browsers, runs the E2E suite, and uploads the HTML report as
   an artifact (kept 30 days).
 
-**One manual setup step:** add a repository secret `BASE_URL` (repo **Settings →
-Secrets and variables → Actions**) — the `test` job reads it in place of a local
-`.env`. Without it, that job fails fast with `BASE_URL is not set`.
+**No setup needed.** `.env` is gitignored, so the workflow supplies `BASE_URL` itself —
+the demo storefront is public and fixed, so it is plain config, not a secret. To target a
+different store, edit that `env:` line in the workflow.
 
 ---
 

@@ -27,10 +27,11 @@ jobs:
   test:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    # .env is gitignored, so CI reads BASE_URL from a GitHub repository secret.
-    # Set it under Settings > Secrets and variables > Actions > Secrets.
+    # .env is gitignored, so CI supplies BASE_URL here. The demo storefront is public
+    # and fixed, so it is plain config — not a secret. Point it elsewhere by editing
+    # this line (or switch to a repo variable if it ever becomes environment-specific).
     env:
-      BASE_URL: ${{ secrets.BASE_URL }}
+      BASE_URL: https://boost-pfs-demo.myshopify.com
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
