@@ -151,6 +151,33 @@ thể không biết dùng cái nào.
 - [ ] Dùng thử 1–2 tuần
 - [ ] Chốt: mỗi vai trò một công cụ, **hoặc** ghi rõ trong `ai-agents.md` khi nào dùng cái nào
 
+### N3 — Luật nên đặt ở đâu? _(đã quyết 2026-08-02, cần theo dõi)_
+
+Khi tích hợp bộ `.claude` mới, ta **không** tạo `.claude/rules/` mà trộn luật vào 3 file
+sẵn có ở gốc repo. Ghi lại **lý do**, để sau này ai muốn đổi thì cân nhắc trên dữ kiện
+chứ không làm lại từ đầu.
+
+**Vì sao đặt ở gốc repo:**
+
+| Lý do                   | Chi tiết                                                                                                                                                                                                                                     |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hiệu lực tự động**    | `CLAUDE.md` được Claude Code **nạp tự động mọi phiên**. `.claude/rules/` **không phải cơ chế có sẵn** — nó chỉ có tác dụng khi một skill/agent nhớ trỏ tới. Luật ở `CLAUDE.md` = **luôn có hiệu lực**; ở `.claude/rules/` = **có điều kiện** |
+| **Người cũng đọc luật** | `.claude/` mang nghĩa "đồ nghề của AI". 12 QA cần đọc luật hằng ngày — để ở gốc thì tự tìm thấy                                                                                                                                              |
+| **Chống drift**         | Hai file cùng nói một luật sẽ lệch nhau (đúng bệnh của README cũ)                                                                                                                                                                            |
+| **Fan-out gọn**         | Đơn vị nhân bản = `TESTING-STANDARD.md` + `.claude/`; luật rải hai nơi làm phức tạp                                                                                                                                                          |
+
+**Đánh đổi đã chấp nhận:** phải viết lại con trỏ của skill nguồn (`playwright_rules.md §3`
+→ mục tương ứng của ta), và section không map 1-1.
+
+**⚠️ Ngưỡng cần theo dõi:** chỉ `CLAUDE.md` là nạp mọi lượt. Nếu nó vượt **~300 dòng**,
+cái giá token bắt đầu vượt lợi ích. Khi đó **đừng** quay lại `.claude/rules/` — hãy giữ
+`CLAUDE.md` mỏng như một mục lục có tính bắt buộc, đẩy chi tiết sang file chuyên đề **ở
+gốc repo** (đúng mô hình `TESTING-STANDARD.md` / `LOCATOR-STRATEGY-GUIDELINE.md` hiện nay).
+
+- Hiện tại: `CLAUDE.md` **154 dòng** — còn xa ngưỡng. Hai file chuyên đề (127 + 229 dòng)
+  **không** nạp tự động nên không tính vào chi phí mỗi lượt.
+- [ ] Kiểm lại khi `CLAUDE.md` chạm ~300 dòng
+
 ---
 
 ## Quyết định & bài học đã chốt
