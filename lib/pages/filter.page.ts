@@ -7,7 +7,7 @@ export class FilterPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.filteredProducts = page.locator(".boost-sd__product");
+    this.filteredProducts = page.locator(".boost-sd__product-item");
   }
 
   /**

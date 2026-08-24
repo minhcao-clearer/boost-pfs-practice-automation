@@ -1,5 +1,5 @@
 {
-  "name": "boost-pfs-demo-automation",
+  "name": "boost-pfs-practice-automation",
   "version": "1.0.0",
   "description": "Playwright + TypeScript E2E test framework for the Boost Commerce product filtering system",
   "private": true,
@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:filter": "npx playwright test filter.spec.ts"
+    "test:filter": "playwright test filter.spec.ts"
   },
   "license": "UNLICENSED",
   "engines": {

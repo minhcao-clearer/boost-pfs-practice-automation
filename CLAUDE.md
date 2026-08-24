@@ -24,13 +24,13 @@ or hardcoded data values. Everything mechanical lives under `lib/`.
 
 ## Where code goes (respect the layering)
 
-| Layer | Folder | Put here | NEVER put here |
-| --- | --- | --- | --- |
-| **Data** | `lib/data` | Constant inputs (`FILTER_DATA`), routes (`ROUTES`), URL builders | Assertions, selectors, page logic |
-| **Pages** | `lib/pages` | Selectors + page actions + data reads (Page Objects) | `expect()`/assertions, test data |
-| **Fixtures** | `lib/fixtures` | Wiring that injects Page Objects into tests | Business logic, assertions |
-| **Types** | `lib/types` | Shared TypeScript interfaces (e.g. `ProductData`) | Runtime code |
-| **Tests** | `tests/` | Scenario + `expect` assertions | Raw selectors, hardcoded URLs/data |
+| Layer        | Folder         | Put here                                                         | NEVER put here                     |
+| ------------ | -------------- | ---------------------------------------------------------------- | ---------------------------------- |
+| **Data**     | `lib/data`     | Constant inputs (`FILTER_DATA`), routes (`ROUTES`), URL builders | Assertions, selectors, page logic  |
+| **Pages**    | `lib/pages`    | Selectors + page actions + data reads (Page Objects)             | `expect()`/assertions, test data   |
+| **Fixtures** | `lib/fixtures` | Wiring that injects Page Objects into tests                      | Business logic, assertions         |
+| **Types**    | `lib/types`    | Shared TypeScript interfaces (e.g. `ProductData`)                | Runtime code                       |
+| **Tests**    | `tests/`       | Scenario + `expect` assertions                                   | Raw selectors, hardcoded URLs/data |
 
 A selector belongs in **exactly one** place: the Page Object. If Boost's markup changes,
 only `lib/pages/*.ts` should change.
@@ -104,13 +104,13 @@ them produces false failures.
 - Use **Node 20** (`nvm use`). Newer Node runs but warns (`EBADENGINE`).
 - Setup once: `npm install` then `npx playwright install`.
 
-| Command | Purpose |
-| --- | --- |
-| `npm test` | Run the suite (headless) |
-| `npm run test:ui` | UI mode — preferred for developing/debugging |
-| `npm run test:debug` | Playwright Inspector |
-| `npm run report` | Open last HTML report |
-| `npm run typecheck` / `lint` / `format:check` | The three CI quality gates |
+| Command                                       | Purpose                                      |
+| --------------------------------------------- | -------------------------------------------- |
+| `npm test`                                    | Run the suite (headless)                     |
+| `npm run test:ui`                             | UI mode — preferred for developing/debugging |
+| `npm run test:debug`                          | Playwright Inspector                         |
+| `npm run report`                              | Open last HTML report                        |
+| `npm run typecheck` / `lint` / `format:check` | The three CI quality gates                   |
 
 ## Before you call a change done
 

@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+
+# Generated Playwright artifacts
+playwright-report/
+test-results/
+blob-report/

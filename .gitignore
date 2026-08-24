@@ -1,0 +1,12 @@
+node_modules/
+
+# Playwright artifacts (generated per run)
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Local environment (never commit secrets/config)
+.env
+.env.*
+!.env.example
