@@ -23,6 +23,23 @@ khác biệt**.
 > (workstream B của Giai đoạn 1). Ta **gộp** nó vào agent này, **không** tạo skill riêng
 > — tránh trùng vai trò.
 
+## Playwright MCP — AI mở trình duyệt thật để soi DOM
+
+Repo có sẵn [`.mcp.json`](../.mcp.json): Claude Code sẽ khởi động **Playwright MCP** cho
+project này. Nhờ đó AI **mở được trình duyệt thật**, đọc DOM, thử locator ngay trên trang
+— thay vì đoán.
+
+|                  |                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Chế độ**       | **Headed** — cửa sổ trình duyệt hiện lên để bạn nhìn thấy AI đang làm gì (đây là _mặc định_ của Playwright MCP; không cần flag) |
+| **Viewport**     | Cố định **1920×1080**, khớp đúng luật trong [`CLAUDE.md`](../CLAUDE.md) — không phụ thuộc việc AI có nhớ resize hay không       |
+| **Lần đầu dùng** | Claude Code sẽ **hỏi bạn duyệt** MCP server của project (cơ chế an toàn) — chọn đồng ý                                          |
+| **Cài đặt**      | Không cần cài gì; `npx` tự tải khi dùng lần đầu                                                                                 |
+
+> **Vì sao quan trọng:** luật `TESTING-STANDARD` §4 ghi _"không bao giờ đoán locator — đọc
+> từ DOM thật"_. MCP chính là công cụ để **làm được** điều đó. Không có nó, luật chỉ là
+> khẩu hiệu.
+
 ## Phạm vi không bị giới hạn
 
 Click, điền form, điều hướng, keyboard, upload, API, visual... **đều được**. Kỷ luật nằm

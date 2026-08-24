@@ -105,6 +105,7 @@ boost-pfs-practice-automation/
 ├── playwright.config.ts           # Test runner config (timeouts, baseURL, …)
 ├── eslint.config.mjs              # Lint rules (flat config)
 ├── tsconfig.json                  # TypeScript (strict) options
+├── .mcp.json                      # Playwright MCP for AI-assisted DOM inspection
 ├── .env.example                   # Template for BASE_URL (copy to .env)
 ├── .nvmrc / .editorconfig         # Node version / editor defaults
 ├── .prettierrc.json               # Formatting rules
