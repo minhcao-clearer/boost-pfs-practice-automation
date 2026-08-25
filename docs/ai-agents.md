@@ -11,13 +11,34 @@ Ba agent **do team tự viết**, **portable** (dùng được cho mọi project
 `CLAUDE.md` của project hiện tại (**luật đặc thù**) — **luật của project thắng khi có
 khác biệt**.
 
-## Ba agent
+## Ba agent — làm một việc trọn vẹn
 
 | Agent             | Lệnh           | Dùng khi                                  | Quyền            |
 | ----------------- | -------------- | ----------------------------------------- | ---------------- |
 | **test-author**   | `/new-test`    | Viết test mới cho một scenario bất kỳ     | Đọc + ghi + chạy |
 | **test-reviewer** | `/review-test` | Soi 1 test/diff theo luật trước khi mở PR | **Read-only**    |
 | **test-healer**   | `/heal-tests`  | Test đỏ, cần fix đúng gốc                 | Đọc + sửa + chạy |
+
+## Bốn skill — kiến thức chuyên môn cho từng phần việc
+
+Skill **không tự chạy một mình**; nó nạp cách làm đúng vào ngữ cảnh khi bạn (hoặc một
+agent) cần đến phần việc đó.
+
+| Skill                | Dùng khi                                                                     |
+| -------------------- | ---------------------------------------------------------------------------- |
+| **write-test-cases** | Có requirement/user story → viết test case thủ công (positive/negative/edge) |
+| **inspect-ui**       | Cần mở trang thật để tìm/kiểm chứng locator, hoặc điều tra vì sao test đỏ    |
+| **smart-locator**    | Chọn locator ổn định cho một element, kèm fallback                           |
+| **test-data**        | Cần dữ liệu test: cái nào là hằng số, cái nào phải sinh unique + truy vết    |
+
+## Một lệnh chạy trọn quy trình
+
+| Lệnh                   | Làm gì                                                                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `/automate-test-cases` | Từ **test case đã viết** → recon DOM thật → thiết kế Page Object → sinh data → sinh spec → chạy & tự sửa → dọn & bàn giao |
+
+Nó điều phối các skill ở trên. Đây là đường đi tự nhiên của team: **viết test case
+(`write-test-cases`) → tự động hoá (`/automate-test-cases`) → soi lại (`/review-test`)**.
 
 > **Ghi chú (đã gộp):** `test-reviewer` **chính là** năng lực _"review-against-rules"_
 > (workstream B của Giai đoạn 1). Ta **gộp** nó vào agent này, **không** tạo skill riêng
