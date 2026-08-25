@@ -36,15 +36,20 @@ description: Convert manual test cases into automation scripts autonomously usin
 
 ## Inputs to collect
 
-| Input                                  | How to obtain                                                                                                               | Priority    |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| **Test case file** (MD/Excel/JSON/URL) | User provides path or URL                                                                                                   | ⭐ Required |
-| **Feature** the tests belong to        | **List the folders already under `tests/`, then ask** the user to pick one or name a new one. Never invent it (`CLAUDE.md`) | ⭐ Required |
-| **Tags** (`@smoke`, `@regression`)     | User specifies — type is a tag, not a folder                                                                                | ⭐ Required |
-| **Application URL**                    | User provides or embedded in TC                                                                                             | ⭐ Required |
-| **Credentials** (if login needed)      | User provides or use existing fixture. **Do NOT read `.env` directly**                                                      | Optional    |
+| Input                                  | How to obtain                         | Priority    |
+| -------------------------------------- | ------------------------------------- | ----------- |
+| **Test case file** (MD/Excel/JSON/URL) | User provides path or URL             | ⭐ Required |
+| **Feature** the tests belong to        | Ask — see below                       | ⭐ Required |
+| **Tags** (`@smoke`, `@regression`)     | User specifies                        | ⭐ Required |
+| **Application URL**                    | User provides or embedded in TC       | ⭐ Required |
+| **Credentials** (if login needed)      | User provides or use existing fixture | Optional    |
 
 If the user has not provided enough → ask before starting.
+
+**Feature:** list the folders already under `tests/`, then ask the user to pick one or
+name a new one — never invent it (`CLAUDE.md`). The test type is a **tag**, not a folder.
+
+**Credentials:** do **not** read `.env` directly.
 
 ---
 
