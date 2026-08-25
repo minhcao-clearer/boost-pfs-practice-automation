@@ -151,20 +151,6 @@ thể không biết dùng cái nào.
 - [ ] Dùng thử 1–2 tuần
 - [ ] Chốt: mỗi vai trò một công cụ, **hoặc** ghi rõ trong `ai-agents.md` khi nào dùng cái nào
 
-### N4 — Preload skill vào subagent _(cơ hội chưa dùng, phát hiện 2026-08-25)_
-
-Tài liệu Claude Code cho biết **subagent** (`.claude/agents/*.md`) hỗ trợ trường
-`skills:` trong frontmatter để **nạp sẵn** skill vào subagent đó. Ba agent của repo
-(`test-author`, `test-reviewer`, `test-healer`) hiện **chưa dùng**.
-
-- **Cơ hội:** `test-author` nạp sẵn `smart-locator` + `inspect-ui` + `test-data`;
-  `test-healer` nạp `inspect-ui` + `smart-locator`.
-- **Chưa làm vì:** chưa xác minh cú pháp chính xác (trang `/docs/en/sub-agents` mục
-  _preload skills into subagents_). Đừng áp dụng khi chưa đọc.
-- **Lưu ý:** `skills:` **không** phải trường hợp lệ cho skill/command — chỉ cho subagent.
-  Bộ `.claude` nhập vào có `skills:` trong file command; nó vô tác dụng, đã bỏ.
-- [ ] Đọc tài liệu sub-agents → xác minh cú pháp → áp dụng nếu có lợi
-
 ### N3 — Luật nên đặt ở đâu? _(đã quyết 2026-08-02, cần theo dõi)_
 
 Khi tích hợp bộ `.claude` mới, ta **không** tạo `.claude/rules/` mà trộn luật vào 3 file
@@ -191,6 +177,45 @@ gốc repo** (đúng mô hình `TESTING-STANDARD.md` / `LOCATOR-STRATEGY-GUIDELI
 - Hiện tại: `CLAUDE.md` **154 dòng** — còn xa ngưỡng. Hai file chuyên đề (127 + 229 dòng)
   **không** nạp tự động nên không tính vào chi phí mỗi lượt.
 - [ ] Kiểm lại khi `CLAUDE.md` chạm ~300 dòng
+
+### N4 — Preload skill vào subagent _(cơ hội chưa dùng, phát hiện 2026-08-25)_
+
+Tài liệu Claude Code cho biết **subagent** (`.claude/agents/*.md`) hỗ trợ trường
+`skills:` trong frontmatter để **nạp sẵn** skill vào subagent đó. Ba agent của repo
+(`test-author`, `test-reviewer`, `test-healer`) hiện **chưa dùng**.
+
+- **Cơ hội:** `test-author` nạp sẵn `smart-locator` + `inspect-ui` + `test-data`;
+  `test-healer` nạp `inspect-ui` + `smart-locator`.
+- **Chưa làm vì:** chưa xác minh cú pháp chính xác (trang `/docs/en/sub-agents` mục
+  _preload skills into subagents_). Đừng áp dụng khi chưa đọc.
+- **Lưu ý:** `skills:` **không** phải trường hợp lệ cho skill/command — chỉ cho subagent.
+  Bộ `.claude` nhập vào có `skills:` trong file command; nó vô tác dụng, đã bỏ.
+- [ ] Đọc tài liệu sub-agents → xác minh cú pháp → áp dụng nếu có lợi
+
+### N5 — Test lọc màu+giá có bị flaky? _(quan sát 2026-08-25, chưa điều tra)_
+
+Ngày 2026-08-25 test `tests/filter/color-price.spec.ts` **đỏ 3 lần**, cả 3 lần **chạy lại
+là xanh**. Không lần nào do thay đổi code — hôm đó chỉ sửa tài liệu và `.claude/`.
+
+**Triệu chứng:** `waitForProductsLoaded()` timeout (~20s) — lưới sản phẩm không render kịp.
+
+**Chưa kết luận được là do đâu:**
+
+- Store demo dùng chung chậm/nghẽn nhất thời (ta gọi vào nó rất nhiều hôm đó), **hay**
+- **Bản thân test viết chưa tối ưu** — chờ sai tín hiệu. Hiện đang
+  `goto(..., { waitUntil: "domcontentloaded" })` rồi chờ **thẻ sản phẩm đầu tiên hiện ra**.
+  Có thể nên chờ **response của request lấy sản phẩm** (`waitForResponse`) — sát với "đã có
+  dữ liệu" hơn là "đã vẽ xong phần tử đầu".
+
+**Vì sao đáng quan tâm:** `retries: 0` (`playwright.config.ts:33`) nên mỗi flake là **một
+lần đỏ**. Người có kinh nghiệm biết chạy lại; **12 bạn mới thì không** — họ sẽ tưởng mình
+làm hỏng gì đó. Bản thân `retries: 0` vẫn đúng (thấy thật, không giấu); vấn đề là test và
+tài liệu.
+
+- [ ] Đo tần suất: `npx playwright test --repeat-each=20` vào giờ khác nhau
+- [ ] Nếu do test: đổi sang chờ đúng tín hiệu (`waitForResponse`) thay vì chờ phần tử
+- [ ] Dù kết luận thế nào: bổ sung vào `learn-playwright.md` mục _"đỏ chưa chắc là bug —
+      chạy lại và `--repeat-each` trước khi kết luận"_
 
 ---
 
