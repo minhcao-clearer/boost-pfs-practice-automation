@@ -23,12 +23,13 @@ description: Convert manual test cases into automation scripts autonomously usin
 
 ## ⚠️ Execution principles
 
-- **Role:** Act as a Senior Automation Engineer — follow Clean Code + the project's layering
+- **Role:** Act as an experienced Senior Automation Engineer — follow Clean Code + the project's layering
 - **All output in English**
 - **NEVER guess locators** — inspect the real DOM via MCP or a CLI recon spec
 - **Desktop viewport 1920×1080** — already pinned in [`.mcp.json`](../../.mcp.json), no resize call needed
-- ⚠️ **Rule E3 (CRITICAL):** Test FAIL → read logs → analyze → fix → re-run. **DO NOT ask the
-  user while fixing.** Ask only when business rules conflict or after 5 auto-heal rounds
+- ⚠️ **Fix autonomously (CRITICAL):** Test FAIL → read logs → analyze → fix → re-run. **DO
+  NOT ask the user while fixing.** Ask only when business rules conflict or after 5
+  auto-heal rounds
 - **Artifact `task.md`** — MUST be created to track progress across all steps
 
 ---
@@ -236,7 +237,7 @@ interaction.
 
 ---
 
-### Step 6: Execution & Auto-Heal (Rule E3)
+### Step 6: Execution & Auto-Heal
 
 1. **Run tests:**
 
@@ -304,7 +305,7 @@ interaction.
    If a Jira/Xray integration is configured, file it there and record the key in `task.md`.
    Otherwise report it to the user. **Do not bend the test to match broken behaviour.**
 
-4. **⚠️ Rule E3 — DO NOT ask the user while fixing.** Ask only when:
+4. **⚠️ Fix autonomously — DO NOT ask the user while fixing.** Ask only when:
    - Server/app inaccessible
    - Business rules conflict
    - Still failing after 5 rounds
