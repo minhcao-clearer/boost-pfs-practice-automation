@@ -5,9 +5,9 @@ description: Produce a stable, verified locator for a UI element — inspect the
 
 # Smart Locator
 
-Produce a locator that is **stable** — one that keeps matching the right element after the
-UI is refactored (an extra wrapper `div`, a renamed class, a changed layout), not merely
-one that matches today.
+Produce a locator that is **stable and maintainable** — one that keeps matching the right
+element after the UI is refactored (an extra wrapper `div`, a renamed class, a changed
+layout), and that the next reader can understand without opening DevTools.
 
 ## Read first
 
@@ -32,9 +32,13 @@ one that matches today.
 
 ## Output
 
-For each element:
+For each element, give all four:
 
-| Element | Primary | Fallback | Verified how |
-| ------- | ------- | -------- | ------------ |
+| Element | Primary | Fallback | Reasoning | Verified how |
+| ------- | ------- | -------- | --------- | ------------ |
 
-Then state where it belongs: a selector lives in a **Page Object**, never in a spec.
+**Reasoning** — why this locator over the alternatives — matters as much as the locator
+itself: it is what lets the next person judge whether a change is safe. **Verified how**
+records the evidence that it actually matches.
+
+Then say where it goes, per the project's layering (`CLAUDE.md`).
