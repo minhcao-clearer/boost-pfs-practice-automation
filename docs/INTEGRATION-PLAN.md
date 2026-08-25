@@ -101,8 +101,39 @@ với file luật (chỉ trích dẫn).
 - [ ] Áp quyết định R2 cho `review-and-refactor`, `qa-automation-engineer`
 - [ ] Nếu gộp: giữ **một** tên duy nhất cho mỗi vai trò, xoá cái còn lại
 - [ ] Cập nhật [`ai-agents.md`](ai-agents.md) — bảng agent/skill phải khớp thực tế
+- [ ] Đổi REST Assured/TestNG (Java) → `request` fixture của Playwright, trong
+      `qa-automation-engineer/SKILL.md` + `TEST_STRATEGY.md` + `PROMPT_TEMPLATES.md` #3
 
 **Xong khi:** mỗi vai trò (viết / soi / chữa / …) có đúng **một** công cụ.
+
+### Đã phân tích sẵn ở Bước 4 — `qa-automation-engineer`
+
+**Phải tách làm hai, đừng quyết cả cụm:**
+
+**(1) `SKILL.md` (108 dòng) — là trang mục lục, không tự định nghĩa luật nào** (nó ghi
+_"do not repeat here"_ rồi trỏ sang `rules/`). Đối chiếu 9 năng lực nó khai:
+
+| Năng lực                                                                               | Repo ta                                                                                                          |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Manual test cases · automation từ test case · test data · locator · explore UI · flaky | ✅ đã có (`write-test-cases`, `/automate-test-cases`, `test-data`, `smart-locator`, `inspect-ui`, `test-healer`) |
+| **API test từ Swagger/OpenAPI**                                                        | ❌ chưa có                                                                                                       |
+| **Sinh automation framework**                                                          | ❌ chưa có                                                                                                       |
+| **Sinh requirement từ phân tích website**                                              | ❌ chưa có                                                                                                       |
+
+→ **6/9 đã được phủ.** `docs/ai-agents.md` cũng đang làm vai trò mục lục tốt hơn (tiếng
+Việt, có bảng "dùng khi nào"). Bỏ `SKILL.md` gần như không mất gì — **trừ 3 năng lực chưa
+có nhà** ở trên, cần quyết có muốn không.
+
+**(2) `references/` (209 dòng) — KHÔNG trùng với bất cứ thứ gì trong repo:**
+
+| File                  | Dòng | Nội dung                                                               | Ghi chú khi port                |
+| --------------------- | ---- | ---------------------------------------------------------------------- | ------------------------------- |
+| `PROMPT_TEMPLATES.md` | 116  | Mẫu prompt tái dùng cho các task QA                                    | Bỏ mẫu REST Assured (#3)        |
+| `TEST_STRATEGY.md`    | 54   | Mục tiêu, scope, lịch chạy (smoke mỗi build, regression trước release) | Bỏ Allure / REST Assured / pnpm |
+| `PROJECT_CONTEXT.md`  | 39   | Mô tả app đang test — đang điền dở cho Shopify                         | Điền lại cho repo này           |
+
+→ Đây là **nội dung thật, chưa được phủ ở đâu**. Quyết riêng, và quyết cả **chỗ đặt**
+(`docs/`? `.claude/skills/`?).
 
 ---
 
