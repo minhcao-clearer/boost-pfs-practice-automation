@@ -5,7 +5,9 @@ description: Produce a stable, verified locator for a UI element — inspect the
 
 # Smart Locator
 
-Produce a locator that will still work next month.
+Produce a locator that is **stable** — one that keeps matching the right element after the
+UI is refactored (an extra wrapper `div`, a renamed class, a changed layout), not merely
+one that matches today.
 
 ## Read first
 
