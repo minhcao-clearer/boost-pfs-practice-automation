@@ -106,6 +106,35 @@ với file luật (chỉ trích dẫn).
 
 **Xong khi:** mỗi vai trò (viết / soi / chữa / …) có đúng **một** công cụ.
 
+### Cảnh báo: bộ nguồn mang tên tool của một AI agent KHÁC
+
+Phát hiện khi review Step 1. Bộ `.claude` nguồn dùng một bộ tool **không tồn tại trong
+Claude Code**:
+
+| Tên trong nguồn    | Claude Code | Ghi chú                           |
+| ------------------ | ----------- | --------------------------------- |
+| `view_file`        | `Read`      |                                   |
+| `write_to_file`    | `Write`     |                                   |
+| `run_command`      | `Bash`      |                                   |
+| `read_url_content` | `WebFetch`  | ⚠️ **fail với URL cần đăng nhập** |
+
+Cùng họ dấu vết: `rtk playwright` (CLI riêng), "AI-RBT Framework" và "Rule E3" (hai cái
+tên không được định nghĩa ở đâu). Ngược lại `browser_*` **là thật** — đó là Playwright MCP.
+
+→ **Không cần thay thế gì** — năng lực đã có sẵn dưới tên khác. Việc phải làm chỉ là **bỏ
+tên tool ra khỏi tài liệu**; viết tên tool vào chỉ khoá tài liệu vào một công cụ cụ thể.
+
+**⚠️ Việc cho Bước 5:**
+
+- [ ] `CLAUDE.md` của **repo nguồn** (dòng 24) cũng nhiễm các tên này, trong quy tắc bảo
+      mật _"không đọc `.env` để lấy credential"_. Nếu lấy quy tắc đó sang, **viết lại
+      không kèm tên tool** — chỉ giữ nguyên tắc.
+- [ ] **Đọc test case từ Confluence/Google Sheets:** `WebFetch` **fail với URL cần đăng
+      nhập**, mà test case của team gần như luôn ở đó. Ba lối đi: **Atlassian MCP** (đã
+      cấu hình global nhưng **chưa authorize** — bật qua connector settings trên claude.ai
+      hoặc `/mcp` trong phiên interactive) · Google Sheets _publish to web_ · hoặc tải file
+      về rồi đưa đường dẫn. Cần chốt hướng nào rồi ghi vào Step 1 của command.
+
 ### Đã phân tích sẵn ở Bước 4 — `qa-automation-engineer`
 
 **Phải tách làm hai, đừng quyết cả cụm:**
