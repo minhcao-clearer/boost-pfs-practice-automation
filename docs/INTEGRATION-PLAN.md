@@ -87,6 +87,27 @@ với file luật (chỉ trích dẫn).
 - [x] `npm run check` xanh sau mỗi lần thêm
 - [ ] **Dogfood thật** từng cái → giữ hoặc chỉnh
 
+#### Nhật ký review thủ công
+
+Port xong **không có nghĩa là đúng**. Review thủ công từng dòng đã tìm ra 6 lỗi mà
+**không gate nào bắt được** (`npm run check` xanh, link không gãy, format chuẩn):
+
+| File                  | Lỗi                                                                              | Loại             |
+| --------------------- | -------------------------------------------------------------------------------- | ---------------- |
+| `smart-locator`       | Mất **Reasoning** trong Output (bị thay bằng "Verified how" — hai thứ khác nhau) | Mất nội dung     |
+| `smart-locator`       | Câu mở đầu viết bóng bẩy, người đọc không hiểu                                   | Tự ý viết lại    |
+| `automate-test-cases` | **"Rule E3"** — nhãn không định nghĩa ở đâu; đổi thành "Fix autonomously"        | Từ vựng treo     |
+| `automate-test-cases` | Bảng Inputs phình 89 → 185 ký tự do nhét prose vào ô                             | Phá layout nguồn |
+| `automate-test-cases` | Mất khối **"Skills used" ở cả 7 step** (gom hết lên đầu file)                    | Mất ánh xạ       |
+| `automate-test-cases` | Mất nguồn đầu vào **URL** (Google Sheets/Confluence)                             | Mất năng lực     |
+
+**Bốn loại lỗi cần soi ở 3 file còn lại** (`test-data`, `inspect-ui`, `write-test-cases`):
+
+1. **Mất nội dung** — khối nguồn không tồn tại ở đâu khác mà bị cắt
+2. **Từ vựng treo** — nhãn/mã của repo nguồn không định nghĩa được (`E3`, `AI-RBT`, tên tool lạ)
+3. **Phá layout** — nhét prose vào ô bảng, làm bảng tràn màn hình
+4. **Tự ý viết lại** — thay câu chữ nguồn bằng văn phong riêng, làm mờ nghĩa
+
 > **Chuyển sang Bước 5:** việc đổi REST Assured/TestNG → `request` fixture của Playwright.
 > Ba file nhắc nó (`qa-automation-engineer/SKILL.md`, `references/TEST_STRATEGY.md`,
 > `references/PROMPT_TEMPLATES.md`) đều thuộc `qa-automation-engineer` — mà skill đó nằm

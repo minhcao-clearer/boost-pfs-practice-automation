@@ -151,6 +151,20 @@ thể không biết dùng cái nào.
 - [ ] Dùng thử 1–2 tuần
 - [ ] Chốt: mỗi vai trò một công cụ, **hoặc** ghi rõ trong `ai-agents.md` khi nào dùng cái nào
 
+### N4 — Preload skill vào subagent _(cơ hội chưa dùng, phát hiện 2026-08-25)_
+
+Tài liệu Claude Code cho biết **subagent** (`.claude/agents/*.md`) hỗ trợ trường
+`skills:` trong frontmatter để **nạp sẵn** skill vào subagent đó. Ba agent của repo
+(`test-author`, `test-reviewer`, `test-healer`) hiện **chưa dùng**.
+
+- **Cơ hội:** `test-author` nạp sẵn `smart-locator` + `inspect-ui` + `test-data`;
+  `test-healer` nạp `inspect-ui` + `smart-locator`.
+- **Chưa làm vì:** chưa xác minh cú pháp chính xác (trang `/docs/en/sub-agents` mục
+  _preload skills into subagents_). Đừng áp dụng khi chưa đọc.
+- **Lưu ý:** `skills:` **không** phải trường hợp lệ cho skill/command — chỉ cho subagent.
+  Bộ `.claude` nhập vào có `skills:` trong file command; nó vô tác dụng, đã bỏ.
+- [ ] Đọc tài liệu sub-agents → xác minh cú pháp → áp dụng nếu có lợi
+
 ### N3 — Luật nên đặt ở đâu? _(đã quyết 2026-08-02, cần theo dõi)_
 
 Khi tích hợp bộ `.claude` mới, ta **không** tạo `.claude/rules/` mà trộn luật vào 3 file
