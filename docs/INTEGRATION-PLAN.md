@@ -63,10 +63,23 @@ Chi tiết ở _Nhật ký quyết định_.
 
 ---
 
-## Bước 4 — Thêm skill KHÔNG trùng vai _(commit 2)_
+## Bước 4 — Thêm skill KHÔNG trùng vai 🔄 **PORT XONG, CHỜ DOGFOOD**
 
-Ứng viên: `test-data-generator`, `ui-debug-agent`, `smart-locator-agent`,
-`generate-test-case`, `generate-automation-from-testcases`.
+Đã port 5/5, đổi tên cho gọn và nhất quán:
+
+| Nguồn                                           | → Trong repo này                                     |
+| ----------------------------------------------- | ---------------------------------------------------- |
+| `smart-locator-agent`                           | `.claude/skills/smart-locator/`                      |
+| `test-data-generator`                           | `.claude/skills/test-data/`                          |
+| `ui-debug-agent`                                | `.claude/skills/inspect-ui/`                         |
+| `generate-test-case`                            | `.claude/skills/write-test-cases/`                   |
+| `generate-automation-from-testcases` (426 dòng) | `.claude/commands/automate-test-cases.md` (126 dòng) |
+
+Đã xử lý khi port: `src/`→`lib/` · `rtk playwright`→`npx playwright` · bỏ
+`createLocatorGetter` · bỏ bước `browser_resize` (đã ép trong `.mcp.json`) · trỏ lại mọi
+tham chiếu `rules/` sang 3 file luật · thêm **feature** vào Inputs (phải liệt kê thư mục
+có sẵn rồi hỏi) · gom spec theo chức năng + tag · Jira thành tuỳ chọn · bỏ nội dung trùng
+với file luật (chỉ trích dẫn).
 
 - [ ] Với từng skill: sửa đường dẫn/kiến trúc cho khớp repo này (`lib/`, `tests/`) — xử lý R3
 - [ ] Bắt mỗi skill **đọc `TESTING-STANDARD.md` + `CLAUDE.md`** trước khi làm việc
