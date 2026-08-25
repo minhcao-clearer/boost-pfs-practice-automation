@@ -55,9 +55,14 @@ name a new one — never invent it (`CLAUDE.md`). The test type is a **tag**, no
 
 ## Steps
 
-### Step 1: Initialize, Analyze & Plan
+### Step 1: Initialize, Analyze & Plan (Context & Analysis)
 
-1. **Read the test case file** from the user; detect format (Markdown table, Excel, JSON, CSV, free text).
+> **Skills used:** none — this step is reading and planning.
+
+1. **Read the test cases** from the user:
+   - Local file → read it directly
+   - URL (Google Sheets, Confluence, a ticket, …) → fetch it
+   - Detect format: Markdown table, Excel, JSON, CSV, free-form text
 
 2. **Parse test cases** and extract:
    - TC list (ID, Summary, Pre-condition, Action, Data, Expected Results, Priority, Tag)
@@ -88,6 +93,11 @@ name a new one — never invent it (`CLAUDE.md`). The test type is a **tag**, no
 ---
 
 ### Step 2: Autonomous UI Recon
+
+> **Skills used:**
+>
+> - `inspect-ui` — DOM inspection, snapshot, locator discovery protocol
+> - `smart-locator` — generate primary + fallback locators
 
 **Recon approach — CLI first, MCP fallback.**
 
@@ -167,6 +177,8 @@ interaction.
 
 ### Step 3: POM Design
 
+> **Skills used:** none — follow the layering and naming rules in `CLAUDE.md`.
+
 1. **List Page classes** to create — one class per page/screen.
 
 2. **Generate Page Object classes**, each with:
@@ -186,6 +198,10 @@ interaction.
 ---
 
 ### Step 4: Test Data Preparation
+
+> **Skills used:**
+>
+> - `test-data` — unique, traceable data for positive/negative/boundary/edge cases
 
 1. **Analyze test data** from the test cases:
    - Unique per run (email, username, code/ID) → generate, random + traceable
@@ -210,6 +226,9 @@ interaction.
 ---
 
 ### Step 5: Generate Automation Scripts
+
+> **Skills used:** none — test structure, assertion patterns and independence rules come
+> from `TESTING-STANDARD.md` and `CLAUDE.md`.
 
 1. **Create test files** — the feature folder from Inputs, tagged with the agreed tags:
 
@@ -243,6 +262,12 @@ interaction.
 ---
 
 ### Step 6: Execution & Auto-Heal
+
+> **Skills used:**
+>
+> - `inspect-ui` — reopen the browser when a locator fails, re-snapshot, replace it
+> - `smart-locator` — generate a replacement locator when the old one breaks
+> - `test-data` — new unique values when a run collides with leftover data
 
 1. **Run tests:**
 
@@ -324,6 +349,9 @@ interaction.
 ---
 
 ### Step 7: Cleanup & Delivery
+
+> **Skills used:** none — the definition of done is `TESTING-STANDARD.md` §8 plus the
+> project's gate in `CLAUDE.md`.
 
 1. **Code cleanup** (mandatory before delivery):
    - [ ] Delete the `.recon.spec.ts` file — it must never reach source control
