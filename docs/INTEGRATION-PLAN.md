@@ -81,21 +81,16 @@ tham chiếu `rules/` sang 3 file luật · thêm **feature** vào Inputs (phả
 có sẵn rồi hỏi) · gom spec theo chức năng + tag · Jira thành tuỳ chọn · bỏ nội dung trùng
 với file luật (chỉ trích dẫn).
 
-- [ ] Với từng skill: sửa đường dẫn/kiến trúc cho khớp repo này (`lib/`, `tests/`) — xử lý R3
-- [ ] Bắt mỗi skill **đọc `TESTING-STANDARD.md` + `CLAUDE.md`** trước khi làm việc
-- [ ] **Đổi stack API, đừng bỏ năng lực API.** 3 file nhắc REST Assured/TestNG (Java):
-      `qa-automation-engineer/SKILL.md`, `references/TEST_STRATEGY.md`,
-      `references/PROMPT_TEMPLATES.md` #3 → thay bằng **`request` fixture /
-      `APIRequestContext` của Playwright** (cùng runner, cùng TS, cùng `expect`, không
-      thêm thư viện). Bản thân API testing đã được `TESTING-STANDARD` cho phép sẵn.
-- [ ] **Thêm "feature" vào bảng _Inputs to collect_** của
-      `generate-automation-from-testcases` (bảng đó đã thu test-case file, app URL,
-      credentials, tech stack — thêm dòng này). Chức năng là **input của con người**, không
-      để AI đoán: quy trình phải **liệt kê thư mục chức năng đang có** rồi mới hỏi chọn/đặt
-      mới. Nếu đoán, cùng một chức năng sẽ mọc ra `filter` / `filtering` / `product-filter`
-      ở mỗi lần chạy. (Đã áp cho `test-author` + `/new-test`.)
-- [ ] Thêm **từng cái một**, chạy `npm run check` sau mỗi cái
-- [ ] Dogfood thật 1 lần → giữ hoặc bỏ
+- [x] Sửa đường dẫn/kiến trúc cho khớp repo (`lib/`, `tests/`) — R3 xử lý xong
+- [x] Mỗi skill/command trỏ về `TESTING-STANDARD.md` + `CLAUDE.md`
+- [x] Thêm **feature** vào Inputs của `/automate-test-cases`
+- [x] `npm run check` xanh sau mỗi lần thêm
+- [ ] **Dogfood thật** từng cái → giữ hoặc chỉnh
+
+> **Chuyển sang Bước 5:** việc đổi REST Assured/TestNG → `request` fixture của Playwright.
+> Ba file nhắc nó (`qa-automation-engineer/SKILL.md`, `references/TEST_STRATEGY.md`,
+> `references/PROMPT_TEMPLATES.md`) đều thuộc `qa-automation-engineer` — mà skill đó nằm
+> trong nhóm **trùng vai**, xử lý ở Bước 5.
 
 **Xong khi:** mỗi skill mới đã chạy thật ít nhất 1 lần và cho kết quả đúng chuẩn.
 
