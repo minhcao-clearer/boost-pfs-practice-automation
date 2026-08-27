@@ -160,17 +160,15 @@ Không viết: `update`, `fix bug`, `asdfgh`, `commit lần 3`.
 
 ## E. Bài tập trên nhánh này
 
-Ba file để tập: `test-plan.md`, `config.json`, `notes.md`.
+Ba file để tập: `test-plan.md`, `config.json`, `notes.md`. Tick vào từng ô khi làm xong.
 
-| # | Việc | Luyện tình huống |
-| --- | --- | --- |
-| 1 | Tạo file mới `sandbox/lesson-1/cua-toi.md`, viết tên bạn vào, commit | 1 |
-| 2 | Trong `config.json` đổi `timeout` thành `60`. **Xem diff** rồi commit | 2 |
-| 3 | Sửa `config.json` (đổi `retries`) **và** `notes.md` (thêm một dòng) cùng lúc → tách thành **2 commit riêng** | 3 |
-| 4 | Trong `test-plan.md` sửa **mục 2 và mục 11** → dùng Stage Selected Lines để tách thành **2 commit** | 4 |
-| 5 | Sửa bừa `notes.md` rồi **Discard** | 5 |
-| 6 | **Remove** `notes.md`, xem status, rồi Discard để lấy lại | 6 |
-| 7 | Tạo file `scratch.log`, chuột phải xem **Ignore file** có bật không. So với khi chuột phải `config.json` | 7 |
-| 8 | Commit với message sai chính tả, rồi **Amend** để sửa | 8 |
+- [ ] **1.** Tạo file mới `sandbox/lesson-1/cua-toi.md`, viết tên bạn vào, commit — *tình huống 1*
+- [ ] **2.** Trong `config.json` đổi `timeout` thành `60`. **Xem diff trước** rồi commit — *tình huống 2*
+- [ ] **3.** Sửa `config.json` (đổi `retries`) **và** `notes.md` (thêm một dòng) cùng lúc, rồi tách thành **2 commit riêng** — *tình huống 3*
+- [ ] **4.** Trong `test-plan.md` sửa **mục 2 và mục 11**, dùng Stage Selected Lines để tách thành **2 commit** — *tình huống 4*
+- [ ] **5.** Sửa bừa `notes.md` rồi **Discard** — *tình huống 5*
+- [ ] **6.** **Remove** `notes.md`, xem status thay đổi thế nào, rồi Discard để lấy lại — *tình huống 6*
+- [ ] **7.** Tạo file `scratch.log`, chuột phải xem **Ignore file** có bật không. So sánh với khi chuột phải `config.json` — *tình huống 7*
+- [ ] **8.** Commit với message sai chính tả, rồi **Amend** để sửa — *tình huống 8*
 
 Xong hết thì reset về điểm xuất phát: History → chuột phải commit có nhãn `origin/sandbox/lesson-1-commit` → **Reset current branch to this commit** → **Hard**.
