@@ -12,7 +12,7 @@ Ba điều cần nói rõ ngay từ đầu:
 
 **Commit không phải "Save".** Save (Cmd+S) ghi nội dung mới lên file, đè lên nội dung cũ — cái cũ mất luôn. Commit thì tạo một **mốc** mà bạn có thể quay về bất cứ lúc nào. Save là ghi; commit là ghi nhớ.
 
-**Commit là bất biến.** Mỗi commit có một ID riêng (hash, ví dụ `dbfa36c`). Đã tạo rồi thì không sửa được. Cái mà SourceTree gọi là "Amend" thực chất là **tạo một commit mới rồi bỏ commit cũ đi** — nên hash thay đổi. Đây là lý do của quy tắc ở mục D.
+**Commit là bất biến** — đã tạo ra rồi thì không sửa được nữa. Mỗi commit có một mã riêng gọi là **hash** (ví dụ `dbfa36c`), dùng để gọi tên đúng commit đó, giống như số hiệu.
 
 **Commit chỉ nằm trên máy bạn.** Commit xong, đồng nghiệp vẫn chưa thấy gì. Phải push. Đây là chỗ nhầm phổ biến nhất của người mới.
 
@@ -125,9 +125,11 @@ Chi tiết này đáng chỉ ra vì nó dạy đúng khái niệm tracked / untr
 
 ### 8. Amend — sửa commit vừa tạo
 
-Commit xong mới thấy message sai chính tả, hoặc quên mất một file. Tick **Amend latest commit** rồi commit lại.
+Commit xong mới thấy message sai chính tả, hoặc quên mất một file. Tick **Amend latest commit** rồi commit lại. Xong — với 90% trường hợp bạn chỉ cần biết đến đây.
 
-Nhớ: amend **đổi hash**. Xem quy tắc ở mục D.
+Còn đây là chuyện xảy ra bên dưới, cần biết để hiểu quy tắc ở mục D. Nhớ ở phần A: commit là bất biến, không sửa được. Nên "Amend" thực chất **không** sửa commit cũ — nó tạo một commit mới rồi bỏ commit cũ đi. Vì vậy **hash thay đổi**, và commit cũ coi như không còn tồn tại.
+
+Hệ quả: nếu commit đó đã được push lên GitHub thì trên đó vẫn là commit cũ, còn máy bạn đã sang commit mới — hai bên lệch nhau. Đó là lý do của quy tắc 3.
 
 ### 9. Chưa xong nhưng phải làm việc khác
 
