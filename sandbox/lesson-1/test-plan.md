@@ -4,13 +4,13 @@ File này dùng để luyện **Stage Selected Lines**. Hai mục cần sửa n�
 (mục 2 và mục 11) nên Git sẽ tách chúng thành hai khối diff riêng.
 
 ## Danh sách test case
-
+////1
 1. Mở collection, kiểm tra danh sách sản phẩm hiển thị đầy đủ.
 
 2. Filter theo màu Blue, kiểm tra mọi sản phẩm trả về đều có màu Blue. — TODO: bổ sung ghi chú về Multi Color
 
 3. Filter theo màu Red, kiểm tra tương tự.
-
+3.1. helllo
 4. Filter theo khoảng giá 0–50, kiểm tra giá nằm trong khoảng.
 
 5. Filter theo khoảng giá 50–100, kiểm tra tương tự.
