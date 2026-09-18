@@ -75,7 +75,7 @@ test(
 
 
 test(
-  "Filter validation: a colour + price filtered collection shows only matching products - minh test amend - minh test amend",
+  "Filter validation: a colour + price filtered collection shows only matching products --- -- AMEND",
   {
     tag: ["@smoke", "@regression"],
   },
