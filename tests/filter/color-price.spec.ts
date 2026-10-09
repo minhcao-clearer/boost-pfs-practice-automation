@@ -15,7 +15,7 @@ const priceRangeOverlaps = (
 ) => productMin <= bandMax && productMax >= bandMin;
 
 test(
-  "Filter validation: a colour + price filtered collection shows only matching products ----- push",
+  "Filter validation: a colour + price filtered collection shows only matching products --- Test conflict on Minh's machine",
   {
     tag: ["@smoke", "@regression"],
   },
