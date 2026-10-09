@@ -5,3 +5,4 @@
 3. Moi assertion phai co message mo ta.
 4. Khong dung sleep co dinh.
 5. Selector chi dat trong Page Object.
+6. abc
